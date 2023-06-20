@@ -30,6 +30,16 @@ const userSchema = new mongoose.Schema(
         type: String,
       },
     },
+    subscribers: {
+      type: Number,
+      default: 0,
+    },
+    subscribedUsers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
   },

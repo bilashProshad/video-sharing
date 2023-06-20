@@ -5,7 +5,7 @@ import {
   getVideo,
   randomVideos,
   search,
-  subscribeVideo,
+  subscribed,
   trendingVideos,
   updateVideo,
   uploadVideo,
@@ -21,7 +21,7 @@ router
   .get(getVideo);
 router.route("/trend").get(trendingVideos);
 router.route("/random").get(randomVideos);
-router.route("/sub").get(isAuthenticatedUser, subscribeVideo);
+router.route("/subscribed").get(isAuthenticatedUser, subscribed);
 router.route("/tags").get(videosByTag);
 router.route("/search").get(search);
 
