@@ -1,5 +1,6 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { User } from "../models/User.js";
+import { Video } from "../models/Video.js";
 import { ErrorHandler } from "../utils/ErrorHandler.js";
 import { sendToken } from "../utils/sendJwtToken.js";
 
@@ -61,4 +62,60 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
     user: null,
     message: "Successfully logged out",
   });
+});
+
+export const getUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new ErrorHandler(404, "User not found"));
+  }
+
+  res.status(200).json({ success: true, user });
+});
+
+export const subscribe = catchAsyncErrors(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user._id, {
+    $push: { subscribedUsers: req.params.id },
+  });
+
+  await User.findByIdAndUpdate(req.params.id, { $inc: { subscribers: 1 } });
+
+  res.status(200).json({ success: true, message: "Subscription successfull" });
+});
+
+export const unsubscribe = catchAsyncErrors(async (req, res, next) => {
+  await User.findByIdAndUpdate(req.user._id, {
+    $pull: { subscribedUsers: req.params.id },
+  });
+
+  await User.findByIdAndUpdate(req.params.id, { $inc: { subscribers: -1 } });
+
+  res
+    .status(200)
+    .json({ success: true, message: "Unsubscription successfull" });
+});
+
+export const like = catchAsyncErrors(async (req, res, next) => {
+  const id = req.user._id;
+
+  await Video.findByIdAndUpdate(req.params.id, {
+    $addToSet: { likes: id },
+    $pull: { dislikes: id },
+  });
+
+  res.status(200).json({ success: true, message: "The video has been liked." });
+});
+
+export const unlike = catchAsyncErrors(async (req, res, next) => {
+  const id = req.user._id;
+
+  await Video.findByIdAndUpdate(req.params.id, {
+    $addToSet: { dislikes: id },
+    $pull: { likes: id },
+  });
+
+  res
+    .status(200)
+    .json({ success: true, message: "The video has been disliked." });
 });
