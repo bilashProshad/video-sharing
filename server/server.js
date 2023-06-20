@@ -4,6 +4,10 @@ import { connectDatabase } from "./config/database.js";
 import { userRoutes } from "./routes/userRoutes.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import cookieParser from "cookie-parser";
+import { videoRoutes } from "./routes/videoRoutes.js";
+import cloudinary from "cloudinary";
+import bodyParser from "body-parser";
+import fileUpload from "express-fileupload";
 
 const app = express();
 dotenv.config();
@@ -19,12 +23,21 @@ connectDatabase();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
 
 app.get("/", (req, res) => {
   res.send("Welcome to video sharing platfrom");
 });
 
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/videos", videoRoutes);
 
 app.use(errorMiddleware);
 
