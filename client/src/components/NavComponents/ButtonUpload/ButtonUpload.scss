@@ -1,0 +1,21 @@
+.button-upload {
+  border: none;
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: #e4e2e2;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .button-upload > span {
+    display: none;
+  }
+}

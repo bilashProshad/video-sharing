@@ -1,0 +1,16 @@
+.navMenuButton {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.4s;
+  padding: 0.7rem;
+  border-radius: 50%;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
