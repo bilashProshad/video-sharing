@@ -7,11 +7,11 @@ import ButtonUpload from "../NavComponents/ButtonUpload/ButtonUpload";
 import ProfileMenu from "../NavComponents/ProfileMenu/ProfileMenu";
 import ButtonSearch from "../NavComponents/ButtonSearch/ButtonSearch";
 
-const Navbar = () => {
+const Navbar = ({ onExpandSidebar }) => {
   return (
     <nav className="navbar">
       <div className="logos">
-        <NavMenuButton />
+        <NavMenuButton onClick={onExpandSidebar} />
         <Link to={"/"}>
           <img src={logo} alt="Logo" />
         </Link>

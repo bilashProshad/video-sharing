@@ -1,10 +1,10 @@
 import "./ButtonUpload.scss";
-import { AiOutlineCloudUpload } from "react-icons/ai";
+import { HiOutlineUpload } from "react-icons/hi";
 
 const ButtonUpload = ({ ...rest }) => {
   return (
     <button className="button-upload" {...rest}>
-      <AiOutlineCloudUpload /> <span>Upload</span>
+      <HiOutlineUpload /> <span>Upload</span>
     </button>
   );
 };

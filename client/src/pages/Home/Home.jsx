@@ -1,11 +1,10 @@
-import Navbar from "../../components/Navbar/Navbar";
-// import { createPortal } from "react-dom";
+import "./Home.scss";
+import Layout from "../../components/Layout/Layout";
 
 const Home = () => {
   return (
     <>
-      <Navbar />
-      {/* {createPortal(<Backdrop />, document.getElementById("overlays"))} */}
+      <Layout></Layout>
     </>
   );
 };
