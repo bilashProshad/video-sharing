@@ -1,8 +1,12 @@
 .sidebar {
-  width: fit-content;
+  // width: fit-content;
+  min-width: fit-content;
   padding-top: 0.5rem;
   height: calc(100svh - 7rem);
   box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  left: 0;
+  top: 7rem;
 
   > ul {
     list-style: none;
