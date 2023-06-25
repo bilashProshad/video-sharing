@@ -30,7 +30,8 @@ const SidebarSlider = ({ expand, onClose }) => {
   return (
     <>
       {expand &&
-        windowSize < 900 &&
+        windowSize <= 900 &&
+        windowSize >= 768 &&
         createPortal(
           <Backdrop onCloseBackdrop={onClose} />,
           document.getElementById("overlays")
