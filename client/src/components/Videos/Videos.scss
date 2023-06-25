@@ -1,0 +1,17 @@
+.videos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+@media screen and (max-width: 1250px) {
+  .videos {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .videos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
