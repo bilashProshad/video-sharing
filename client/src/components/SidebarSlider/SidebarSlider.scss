@@ -1,12 +1,17 @@
-.sidebar {
+.sidebar-slider {
   // width: fit-content;
   min-width: fit-content;
   padding-top: 0.5rem;
   height: calc(100svh - 7rem);
   box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.1);
-  position: sticky;
+  position: fixed;
   left: 0;
   top: 7rem;
+  z-index: 10;
+  background-color: #fff;
+  display: none;
+  transition: all 0.4s;
+  transform: translateX(-100%);
 
   > ul {
     list-style: none;
@@ -45,12 +50,6 @@
         }
       }
     }
-
-    &.hide-text {
-      > li > a > span {
-        display: none;
-      }
-    }
   }
 
   .bottom {
@@ -77,10 +76,6 @@
         }
       }
     }
-
-    &.hide {
-      display: none;
-    }
   }
 
   > .hr {
@@ -94,11 +89,11 @@
 }
 
 @media screen and (max-width: 900px) {
-  .sidebar > ul > li > a > span {
-    display: none;
-  }
+  .sidebar-slider {
+    display: initial;
 
-  .sidebar > .bottom {
-    display: none;
+    &.show {
+      transform: translateX(0);
+    }
   }
 }
