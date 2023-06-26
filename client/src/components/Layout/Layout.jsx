@@ -3,9 +3,15 @@ import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import "./Layout.scss";
 import SidebarSlider from "../SidebarSlider/SidebarSlider";
+import BottomNav from "../BottomNav/BottomNav";
 
-const Layout = ({ children }) => {
-  const [expandSidebar, setExpandSidebar] = useState(true);
+const Layout = ({
+  children,
+  showSidebar = true,
+  showSidebarSlider = false,
+  expand = true,
+}) => {
+  const [expandSidebar, setExpandSidebar] = useState(expand);
 
   function expandSidebarHandler() {
     setExpandSidebar(!expandSidebar);
@@ -15,8 +21,15 @@ const Layout = ({ children }) => {
     <>
       <Navbar onExpandSidebar={expandSidebarHandler} />
       <div className="layout">
-        <Sidebar expand={expandSidebar} />
-        <SidebarSlider expand={expandSidebar} onClose={expandSidebarHandler} />
+        {showSidebar && <Sidebar expand={expandSidebar} />}
+
+        <SidebarSlider
+          expand={expandSidebar}
+          onClose={expandSidebarHandler}
+          showLargeScreen={showSidebarSlider}
+        />
+
+        <BottomNav />
         <div className="main">{children}</div>
       </div>
     </>

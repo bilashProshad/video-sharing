@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const VideoCard = ({ title, thumbnail, channelName, views, date }) => {
   return (
-    <Link to={`/`} className="video-card">
+    <Link to={`/sv12jlklsdf239843`} className="video-card">
       <div className="top">
         <img src={thumbnail} alt={"thumbnail"} />
       </div>

@@ -12,7 +12,7 @@ import { createPortal } from "react-dom";
 import Backdrop from "../Backdrop/Backdrop";
 import { useEffect, useState } from "react";
 
-const SidebarSlider = ({ expand, onClose }) => {
+const SidebarSlider = ({ expand, onClose, showLargeScreen = false }) => {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -36,7 +36,18 @@ const SidebarSlider = ({ expand, onClose }) => {
           <Backdrop onCloseBackdrop={onClose} />,
           document.getElementById("overlays")
         )}
-      <aside className={`sidebar-slider ${expand ? "show" : ""}`}>
+      {expand &&
+        showLargeScreen &&
+        windowSize > 900 &&
+        createPortal(
+          <Backdrop onCloseBackdrop={onClose} />,
+          document.getElementById("overlays")
+        )}
+      <aside
+        className={`sidebar-slider ${expand ? "show" : ""} ${
+          expand && showLargeScreen ? "showLG" : ""
+        } ${showLargeScreen ? "display-init" : ""}`}
+      >
         <ul>
           <li>
             <Link to={`/`} className="active">

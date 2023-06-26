@@ -10,8 +10,16 @@
   z-index: 10;
   background-color: #fff;
   display: none;
-  transition: all 0.4s;
   transform: translateX(-100%);
+  transition: all 0.4s;
+
+  &.display-init {
+    display: initial;
+  }
+
+  &.showLG {
+    transform: translateX(0);
+  }
 
   > ul {
     list-style: none;
@@ -101,5 +109,9 @@
 @media screen and (max-width: 768px) {
   .sidebar-slider {
     display: none;
+
+    &.display-init {
+      display: none;
+    }
   }
 }

@@ -13,5 +13,12 @@
 @media screen and (max-width: 768px) {
   .videos {
     grid-template-columns: repeat(2, 1fr);
+    padding-bottom: 7rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .videos {
+    grid-template-columns: repeat(1, 1fr);
   }
 }

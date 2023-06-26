@@ -6,10 +6,27 @@ import InputSearch from "../NavComponents/InputSearch/InputSearch";
 import ButtonUpload from "../NavComponents/ButtonUpload/ButtonUpload";
 import ProfileMenu from "../NavComponents/ProfileMenu/ProfileMenu";
 import ButtonSearch from "../NavComponents/ButtonSearch/ButtonSearch";
+import { useEffect, useState } from "react";
 
 const Navbar = ({ onExpandSidebar }) => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 100) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="logos">
         <NavMenuButton onClick={onExpandSidebar} />
         <Link to={"/"}>

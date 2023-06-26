@@ -8,7 +8,6 @@ import {
 import { BiTrendingUp } from "react-icons/bi";
 import { MdOutlineSubscriptions, MdOutlineWatchLater } from "react-icons/md";
 import avatar from "../../assets/profile.png";
-import { HiOutlineUpload } from "react-icons/hi";
 
 const Sidebar = ({ expand = true }) => {
   return (
@@ -86,47 +85,6 @@ const Sidebar = ({ expand = true }) => {
         </ul>
       </aside>
       {/* ==================================================== */}
-      <aside className="sidebar-mb sidebar">
-        <ul>
-          <li>
-            <Link to={`/`} className="active">
-              <AiOutlineHome /> <span>Home</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/`}>
-              <BiTrendingUp /> <span>Trending</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/`}>
-              <AiOutlineCompass /> <span>Discover</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link to={`/`}>
-              <HiOutlineUpload /> <span>Discover</span>
-            </Link>
-          </li>
-
-          <li>
-            <Link to={`/`}>
-              <MdOutlineSubscriptions /> <span>Subscriptions</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/`}>
-              <MdOutlineWatchLater /> <span>Watch Later</span>
-            </Link>
-          </li>
-          <li>
-            <Link to={`/`}>
-              <AiOutlineHeart /> <span>Liked Videos</span>
-            </Link>
-          </li>
-        </ul>
-      </aside>
     </>
   );
 };
