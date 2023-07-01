@@ -1,0 +1,36 @@
+.comment-box {
+  display: flex;
+  align-items: center;
+
+  > div {
+    overflow: hidden;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+
+    > img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+    }
+  }
+
+  > form {
+    width: 100%;
+
+    > input {
+      width: 100%;
+      border: none;
+      outline: none;
+      padding-left: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #e6e6e6;
+      font-size: 1.4rem;
+      transition: all 0.3s;
+
+      &:focus {
+        border-bottom: 1px solid #bdbdbd;
+      }
+    }
+  }
+}
