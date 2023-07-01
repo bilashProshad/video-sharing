@@ -1,0 +1,45 @@
+.description-accordian {
+  padding-top: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+
+  > button {
+    background: transparent;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    width: 100%;
+    color: #444;
+
+    > svg {
+      transition: all 0.5s;
+
+      font-size: 2rem;
+    }
+  }
+
+  > p {
+    max-height: 0;
+    transition: all 0.5s;
+    color: #333;
+    font-size: 1.4rem;
+
+    cursor: pointer;
+  }
+
+  &.show {
+    > button > svg {
+      transform: rotate(-180deg);
+    }
+
+    > p {
+      max-height: 99rem;
+    }
+  }
+}
