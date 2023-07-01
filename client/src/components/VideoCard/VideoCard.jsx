@@ -1,9 +1,19 @@
 import "./VideoCard.scss";
 import { Link } from "react-router-dom";
 
-const VideoCard = ({ title, thumbnail, channelName, views, date }) => {
+const VideoCard = ({
+  title,
+  thumbnail,
+  channelName,
+  views,
+  date,
+  verticle = false,
+}) => {
   return (
-    <Link to={`/sv12jlklsdf239843`} className="video-card">
+    <Link
+      to={`/sv12jlklsdf239843`}
+      className={`video-card ${verticle ? "verticle" : ""}`}
+    >
       <div className="top">
         <img src={thumbnail} alt={"thumbnail"} />
       </div>

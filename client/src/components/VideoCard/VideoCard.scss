@@ -1,10 +1,10 @@
 .video-card {
   overflow: hidden;
-  border-radius: 10px;
 
   > .top > img {
     width: 100%;
     object-fit: cover;
+    border-radius: 10px;
   }
 
   > .bottom {
@@ -30,6 +30,47 @@
         margin-bottom: 0.3rem;
       }
       color: #9b9b9b;
+    }
+  }
+
+  &.verticle {
+    // max-width: 40rem;
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+
+    > .top > img {
+      width: 18rem;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .video-card {
+    &.verticle {
+      max-width: 30rem;
+      display: flex;
+      gap: 1rem;
+
+      > .top > img {
+        width: 15rem;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+      }
+    }
+
+    > .bottom {
+      > .title {
+        font-size: 1.4rem;
+
+        font-weight: 500;
+      }
+
+      > .body {
+        font-size: 1.2rem;
+      }
     }
   }
 }
