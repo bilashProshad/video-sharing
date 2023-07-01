@@ -36,6 +36,10 @@
       display: flex;
       align-items: center;
       gap: 1rem;
+
+      .button-search {
+        display: none;
+      }
     }
   }
 
@@ -44,9 +48,22 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .navbar > .items > .lists .button-search {
+    display: initial;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .navbar {
     padding: 0 1rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .navbar > .items > .lists .button-search > span,
+  .navbar > .items > .lists .button-upload > span {
+    display: none;
   }
 }
 

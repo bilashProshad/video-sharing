@@ -7,9 +7,13 @@ import ButtonUpload from "../NavComponents/ButtonUpload/ButtonUpload";
 import ProfileMenu from "../NavComponents/ProfileMenu/ProfileMenu";
 import ButtonSearch from "../NavComponents/ButtonSearch/ButtonSearch";
 import { useEffect, useState } from "react";
+import ButtonNav from "../NavComponents/ButtonNav/ButtonNav";
+import { HiOutlineUpload } from "react-icons/hi";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Navbar = ({ onExpandSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
+  const auth = true;
 
   useEffect(() => {
     const onScroll = () => {
@@ -39,14 +43,28 @@ const Navbar = ({ onExpandSidebar }) => {
       <div className="items">
         <ul className="lists">
           <li>
-            <ButtonSearch />
+            <ButtonNav className="button-search">
+              <AiOutlineSearch /> <span>Search</span>
+            </ButtonNav>
           </li>
-          <li>
-            <ButtonUpload />
-          </li>
-          <li>
-            <ProfileMenu />
-          </li>
+          {auth ? (
+            <>
+              <li>
+                <ButtonNav className="button-upload">
+                  <HiOutlineUpload /> <span>Upload</span>
+                </ButtonNav>
+              </li>
+              <li>
+                <ProfileMenu />
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <ButtonNav>Sign in</ButtonNav>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </nav>
