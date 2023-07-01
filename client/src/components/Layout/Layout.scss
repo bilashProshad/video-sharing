@@ -7,3 +7,9 @@
     overflow-x: hidden;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .layout > .main {
+    padding: 0;
+  }
+}

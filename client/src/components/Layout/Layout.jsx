@@ -10,6 +10,7 @@ const Layout = ({
   showSidebar = true,
   showSidebarSlider = false,
   expand = true,
+  className,
 }) => {
   const [expandSidebar, setExpandSidebar] = useState(expand);
 
@@ -20,7 +21,7 @@ const Layout = ({
   return (
     <>
       <Navbar onExpandSidebar={expandSidebarHandler} />
-      <div className="layout">
+      <div className={`layout ${className}`}>
         {showSidebar && <Sidebar expand={expandSidebar} />}
 
         <SidebarSlider
