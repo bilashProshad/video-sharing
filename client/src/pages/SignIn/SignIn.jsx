@@ -12,7 +12,7 @@ const SignIn = () => {
       <div className="form-container">
         <div className="top">
           <img src={logo} alt="VidVibes Logo" />
-          <h2>Sign in</h2>
+          <h2>Login</h2>
           <p>to continue to VidVibes</p>
         </div>
 
@@ -23,7 +23,7 @@ const SignIn = () => {
             <Button variant="empty" onClick={() => navigate("/register")}>
               Create account
             </Button>
-            <Button type="submit">Sign in</Button>
+            <Button type="submit">Login</Button>
           </div>
         </form>
       </div>

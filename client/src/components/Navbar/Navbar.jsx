@@ -62,7 +62,7 @@ const Navbar = ({ onExpandSidebar }) => {
           ) : (
             <>
               <li>
-                <ButtonNav onClick={() => navigate("/signin")}>
+                <ButtonNav onClick={() => navigate("/login")}>
                   Sign in
                 </ButtonNav>
               </li>

@@ -21,7 +21,7 @@ const Register = () => {
           <Input type="password" label="Password" />
           <Input type="password" label="Confirm password" />
           <div className="actions">
-            <Button variant="empty" onClick={() => navigate("/signin")}>
+            <Button variant="empty" onClick={() => navigate("/login")}>
               Have an account?
             </Button>
             <Button type="submit">Register</Button>
