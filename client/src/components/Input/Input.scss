@@ -1,0 +1,47 @@
+.input {
+  position: relative;
+  transition: all 0.3s;
+  margin-bottom: 1.5rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  > input {
+    width: 100%;
+    border: 1px solid #93939394;
+    border-radius: 5px;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    padding-left: 2rem;
+  }
+
+  > label {
+    position: absolute;
+    background-color: #fff;
+    color: #939393;
+    padding: 0 0.5rem;
+    left: 0;
+    transform: translateX(1.5rem) translateY(1.5rem);
+    font-size: 1.6rem;
+    transition: all 0.3s;
+    cursor: text;
+  }
+
+  > input:focus ~ label {
+    color: #1e71ff;
+  }
+
+  > input:focus {
+    // outline: 1px solid #1e71ff;
+    outline: 1px solid #1e71ff;
+    border: 1px solid #1e71ff;
+  }
+
+  > input:focus ~ label,
+  > input:valid ~ label {
+    transform: translateX(1.5rem) translateY(-0.6rem);
+    // color: #000;
+    font-size: 1.2rem;
+  }
+}

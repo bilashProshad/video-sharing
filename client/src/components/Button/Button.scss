@@ -1,0 +1,24 @@
+.button {
+  background: transparent;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &.filled.primary {
+    background-color: #1e71ff;
+    color: #fff;
+    &:hover {
+      background-color: hsl(218, 100%, 46%);
+    }
+  }
+
+  &.empty.primary {
+    color: #1e71ff;
+    &:hover {
+      background-color: hsl(218, 100%, 96%);
+    }
+  }
+}
