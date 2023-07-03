@@ -3,17 +3,18 @@ import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import NavMenuButton from "../NavComponents/NavMenuButton/NavMenuButton";
 import InputSearch from "../NavComponents/InputSearch/InputSearch";
-import ButtonUpload from "../NavComponents/ButtonUpload/ButtonUpload";
 import ProfileMenu from "../NavComponents/ProfileMenu/ProfileMenu";
-import ButtonSearch from "../NavComponents/ButtonSearch/ButtonSearch";
 import { useEffect, useState } from "react";
 import ButtonNav from "../NavComponents/ButtonNav/ButtonNav";
 import { HiOutlineUpload } from "react-icons/hi";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ onExpandSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
-  const auth = true;
+  const auth = false;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => {
@@ -61,7 +62,9 @@ const Navbar = ({ onExpandSidebar }) => {
           ) : (
             <>
               <li>
-                <ButtonNav>Sign in</ButtonNav>
+                <ButtonNav onClick={() => navigate("/signin")}>
+                  Sign in
+                </ButtonNav>
               </li>
             </>
           )}
