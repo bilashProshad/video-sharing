@@ -3,9 +3,68 @@ import logo from "../../assets/logo.png";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Register = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [error, setError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (name.length > 0) {
+      setNameError(false);
+    }
+
+    if (email.length > 0) {
+      setEmailError(false);
+    }
+
+    if (password.length > 0) {
+      setPasswordError(false);
+    }
+
+    if (confirmPassword.length > 0) {
+      setConfirmPasswordError(false);
+    }
+  }, [confirmPassword, email, name, password]);
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    if (!name) {
+      setError(true);
+      setNameError(true);
+      return;
+    }
+
+    if (!email || !email.includes("@")) {
+      setError(true);
+      setEmailError(true);
+      return;
+    }
+
+    if (!password) {
+      setError(true);
+      setPasswordError(true);
+      return;
+    }
+
+    if (!confirmPassword) {
+      setError(true);
+      setConfirmPasswordError(true);
+      return;
+    }
+  };
+
   return (
     <div className="signin">
       <div className="form-container">
@@ -15,11 +74,47 @@ const Register = () => {
           <p>to continue to VidVibes</p>
         </div>
 
-        <form>
-          <Input type="text" label="Name" />
-          <Input type="text" label="Email" />
-          <Input type="password" label="Password" />
-          <Input type="password" label="Confirm password" />
+        <form onSubmit={onSubmitHandler}>
+          <div className="input-box">
+            <Input
+              type="text"
+              label="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            {error && nameError && <span>*** Please enter your name</span>}
+          </div>
+          <div className="input-box">
+            <Input
+              type="text"
+              label="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            {error && emailError && <span>*** Please enter a valid email</span>}
+          </div>
+          <div className="input-box">
+            <Input
+              type="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && passwordError && (
+              <span>*** Please enter your password</span>
+            )}
+          </div>
+          <div className="input-box">
+            <Input
+              type="password"
+              label="Confirm Password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            {error && confirmPasswordError && (
+              <span>*** Please enter your confirm password</span>
+            )}
+          </div>
           <div className="actions">
             <Button variant="empty" onClick={() => navigate("/login")}>
               Have an account?

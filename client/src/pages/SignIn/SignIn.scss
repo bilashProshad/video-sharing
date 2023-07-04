@@ -33,11 +33,25 @@
       }
     }
 
-    > form > .actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 4rem;
+    > form {
+      > .actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 4rem;
+      }
+
+      > .input-box {
+        margin-bottom: 2rem;
+        position: relative;
+
+        > span {
+          position: absolute;
+          // bottom: -2rem;
+          font-size: 1.3rem;
+          color: red;
+        }
+      }
     }
   }
 }
