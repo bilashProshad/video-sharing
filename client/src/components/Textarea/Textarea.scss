@@ -1,0 +1,43 @@
+.textarea {
+  position: relative;
+  transition: all 0.3s;
+
+  > textarea {
+    width: 100%;
+    border: 1px solid #93939394;
+    border-radius: 5px;
+    padding: 1.5rem;
+    font-size: 1.6rem;
+    padding-left: 2rem;
+    resize: vertical;
+  }
+
+  > label {
+    position: absolute;
+    background-color: #fff;
+    color: #939393;
+    padding: 0 0.5rem;
+    left: 0;
+    transform: translateX(1.5rem) translateY(1.5rem);
+    font-size: 1.6rem;
+    transition: all 0.3s;
+    cursor: text;
+  }
+
+  > textarea:focus ~ label {
+    color: #1e71ff;
+  }
+
+  > textarea:focus {
+    // outline: 1px solid #1e71ff;
+    outline: 1px solid #1e71ff;
+    border: 1px solid #1e71ff;
+  }
+
+  > textarea:focus ~ label,
+  > textarea:valid ~ label {
+    transform: translateX(1.5rem) translateY(-0.6rem);
+    // color: #000;
+    font-size: 1.2rem;
+  }
+}
