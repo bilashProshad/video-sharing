@@ -1,4 +1,5 @@
 import "./Button.scss";
+import { BiLoaderAlt } from "react-icons/bi";
 
 const Button = ({
   children,
@@ -7,16 +8,21 @@ const Button = ({
   className,
   variant = "filled",
   color = "primary",
+  width = "",
+  loading = false,
   ...rest
 }) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={"button" + " " + className + " " + variant + " " + color}
+      className={`button ${className} ${variant} ${color} ${width} ${
+        loading ? "loading" : ""
+      }`}
       {...rest}
+      disabled={loading}
     >
-      {children}
+      {loading ? <BiLoaderAlt className="loader" /> : children}
     </button>
   );
 };

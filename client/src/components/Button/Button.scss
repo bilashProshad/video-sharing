@@ -1,4 +1,8 @@
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   background: transparent;
   border: none;
   padding: 1rem 1.5rem;
@@ -7,6 +11,14 @@
   font-size: 1.4rem;
   cursor: pointer;
   transition: all 0.3s;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  > svg {
+    font-size: 1.6rem;
+  }
 
   &.filled.primary {
     background-color: #1e71ff;
@@ -20,6 +32,22 @@
     color: #1e71ff;
     &:hover {
       background-color: hsl(218, 100%, 96%);
+    }
+  }
+
+  &.w-max {
+    width: 100%;
+  }
+
+  .loader {
+    scale: 1.5;
+    stroke-width: 0.5px;
+    animation: rotate 0.8s infinite linear;
+  }
+
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
     }
   }
 }

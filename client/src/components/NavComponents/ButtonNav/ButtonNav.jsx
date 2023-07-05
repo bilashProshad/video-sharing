@@ -1,8 +1,8 @@
 import "./ButtonNav.scss";
 
-const ButtonNav = ({ children, className, ...rest }) => {
+const ButtonNav = ({ children, className, onClick, ...rest }) => {
   return (
-    <button className={`button-nav ${className}`} {...rest}>
+    <button onClick={onClick} className={`button-nav ${className}`} {...rest}>
       {children}
     </button>
   );

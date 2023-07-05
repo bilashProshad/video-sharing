@@ -3,6 +3,7 @@ import Home from "./pages/Home/Home";
 import SingleVideo from "./pages/SingleVideo/SingleVideo";
 import SignIn from "./pages/SignIn/SignIn";
 import Register from "./pages/Register/Register";
+import Upload from "./pages/Upload/Upload";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route path="/:id" element={<SingleVideo />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/upload" element={<Upload />} />
       </Routes>
     </BrowserRouter>
   );

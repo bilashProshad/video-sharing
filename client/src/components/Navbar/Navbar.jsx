@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ onExpandSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
-  const auth = false;
+  const auth = true;
 
   const navigate = useNavigate();
 
@@ -51,7 +51,10 @@ const Navbar = ({ onExpandSidebar }) => {
           {auth ? (
             <>
               <li>
-                <ButtonNav className="button-upload">
+                <ButtonNav
+                  className="button-upload"
+                  onClick={() => navigate("/upload")}
+                >
                   <HiOutlineUpload /> <span>Upload</span>
                 </ButtonNav>
               </li>
