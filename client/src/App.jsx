@@ -4,6 +4,7 @@ import SingleVideo from "./pages/SingleVideo/SingleVideo";
 import SignIn from "./pages/SignIn/SignIn";
 import Register from "./pages/Register/Register";
 import Upload from "./pages/Upload/Upload";
+import Profile from "./pages/Profile/Profile";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/login" element={<SignIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/upload" element={<Upload />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

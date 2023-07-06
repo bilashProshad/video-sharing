@@ -21,7 +21,7 @@ const ProfileMenu = () => {
       {showMenu && (
         <ul>
           <li>
-            <Link to={`/`}>Profile</Link>
+            <Link to={`/profile`}>Profile</Link>
           </li>
           <li>
             <Link to={`/`}>Dashboard</Link>

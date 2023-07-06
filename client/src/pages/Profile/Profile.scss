@@ -1,0 +1,34 @@
+.profile {
+  height: calc(100vh - 7rem - 2rem);
+
+  > .form-container {
+    > img {
+      display: block;
+      width: 15rem;
+      height: 15rem;
+      margin: 0 auto;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      transition: all 0.3s;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+
+    > form {
+      > .buttons {
+        > button {
+          margin-bottom: 1rem;
+        }
+      }
+
+      > .input-box > .input > input {
+        &:disabled ~ label {
+          transform: translateX(1.5rem) translateY(-0.6rem);
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+}
