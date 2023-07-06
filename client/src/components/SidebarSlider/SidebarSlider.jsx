@@ -11,9 +11,12 @@ import avatar from "../../assets/profile.png";
 import { createPortal } from "react-dom";
 import Backdrop from "../Backdrop/Backdrop";
 import { useEffect, useState } from "react";
+import { useSidebarContext } from "../../contexts/SidebarContext";
 
 const SidebarSlider = ({ expand, onClose, showLargeScreen = false }) => {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+
+  const { activeLink, setActiveLink } = useSidebarContext();
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -50,23 +53,39 @@ const SidebarSlider = ({ expand, onClose, showLargeScreen = false }) => {
       >
         <ul>
           <li>
-            <Link to={`/`} className="active">
+            <Link
+              to={`/`}
+              className={activeLink === "home" ? "active" : ""}
+              onClick={() => setActiveLink("home")}
+            >
               <AiOutlineHome /> <span>Home</span>
             </Link>
           </li>
           <li>
-            <Link to={`/`}>
+            <Link
+              to={`/trending`}
+              className={activeLink === "trending" ? "active" : ""}
+              onClick={() => setActiveLink("trending")}
+            >
               <BiTrendingUp /> <span>Trending</span>
             </Link>
           </li>
           <li>
-            <Link to={`/`}>
+            <Link
+              to={`/discover`}
+              className={activeLink === "discover" ? "active" : ""}
+              onClick={() => setActiveLink("discover")}
+            >
               <AiOutlineCompass /> <span>Discover</span>
             </Link>
           </li>
 
           <li>
-            <Link to={`/`}>
+            <Link
+              to={`/subscriptions`}
+              className={activeLink === "subscriptions" ? "active" : ""}
+              onClick={() => setActiveLink("subscriptions")}
+            >
               <MdOutlineSubscriptions /> <span>Subscriptions</span>
             </Link>
           </li>
