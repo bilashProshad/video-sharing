@@ -8,6 +8,7 @@ import { videoRoutes } from "./routes/videoRoutes.js";
 import cloudinary from "cloudinary";
 import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
+import cors from "cors";
 
 const app = express();
 dotenv.config();
@@ -21,6 +22,11 @@ process.on("uncaughtException", (err) => {
 
 connectDatabase();
 
+const corsOption = {
+  credentials: true,
+  origin: [process.env.FRONT_END_URL],
+};
+app.use(cors(corsOption));
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
