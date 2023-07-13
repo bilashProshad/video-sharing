@@ -4,6 +4,15 @@ import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../../contexts/AuthContext";
+import {
+  CLEAR_ERROR,
+  REGISTER_FAIL,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+} from "../../contexts/Actions/AuthActions";
+import api from "../../http";
+import toast from "react-hot-toast";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -17,7 +26,16 @@ const Register = () => {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
+  const { loading, dispatch, error: loginError } = useAuthContext();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginError) {
+      toast.error(loginError);
+      dispatch({ type: CLEAR_ERROR });
+    }
+  }, [loginError, dispatch]);
 
   useEffect(() => {
     if (name.length > 0) {
@@ -37,7 +55,7 @@ const Register = () => {
     }
   }, [confirmPassword, email, name, password]);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     if (!name) {
@@ -62,6 +80,19 @@ const Register = () => {
       setError(true);
       setConfirmPasswordError(true);
       return;
+    }
+
+    try {
+      dispatch({ type: REGISTER_REQUEST });
+      const { data } = await api.post(`/api/v1/user/register`, {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+      dispatch({ type: REGISTER_SUCCESS, payload: data.user });
+    } catch (error) {
+      dispatch({ type: REGISTER_FAIL, payload: error.response.data.message });
     }
   };
 
@@ -119,7 +150,9 @@ const Register = () => {
             <Button variant="empty" onClick={() => navigate("/login")}>
               Have an account?
             </Button>
-            <Button type="submit">Register</Button>
+            <Button type="submit" loading={loading}>
+              Register
+            </Button>
           </div>
         </form>
       </div>

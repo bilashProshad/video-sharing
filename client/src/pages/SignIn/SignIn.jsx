@@ -4,6 +4,15 @@ import Input from "../../components/Input/Input";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import { useEffect, useState } from "react";
+import api from "../../http";
+import { useAuthContext } from "../../contexts/AuthContext";
+import {
+  CLEAR_ERROR,
+  LOGIN_FAIL,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+} from "../../contexts/Actions/AuthActions";
+import toast from "react-hot-toast";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +22,16 @@ const SignIn = () => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
+  const { loading, dispatch, error: loginError } = useAuthContext();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginError) {
+      toast.error(loginError);
+      dispatch({ type: CLEAR_ERROR });
+    }
+  }, [loginError, dispatch]);
 
   useEffect(() => {
     if (email.length > 0) {
@@ -25,7 +43,7 @@ const SignIn = () => {
     }
   }, [email, password]);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     if (!email || !email.includes("@")) {
@@ -38,6 +56,17 @@ const SignIn = () => {
       setError(true);
       setPasswordError(true);
       return;
+    }
+
+    try {
+      dispatch({ type: LOGIN_REQUEST });
+      const { data } = await api.post(`/api/v1/user/login`, {
+        email,
+        password,
+      });
+      dispatch({ type: LOGIN_SUCCESS, payload: data.user });
+    } catch (error) {
+      dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
   };
 
@@ -75,7 +104,9 @@ const SignIn = () => {
             <Button variant="empty" onClick={() => navigate("/register")}>
               Create account
             </Button>
-            <Button type="submit">Login</Button>
+            <Button type="submit" loading={loading}>
+              Login
+            </Button>
           </div>
         </form>
       </div>

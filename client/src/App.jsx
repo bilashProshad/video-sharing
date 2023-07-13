@@ -8,6 +8,9 @@ import Profile from "./pages/Profile/Profile";
 import Trending from "./pages/Trending/Trending";
 import Discover from "./pages/Discover/Discover";
 import Subscriptions from "./pages/Subscriptions/Subscriptions";
+import PublicRoute from "./components/PublicRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -16,13 +19,21 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/discover" element={<Discover />} />
-        <Route path="/subscriptions" element={<Subscriptions />} />
         <Route path="/:id" element={<SingleVideo />} />
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/profile" element={<Profile />} />
+
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
+
+      <Toaster />
     </BrowserRouter>
   );
 };

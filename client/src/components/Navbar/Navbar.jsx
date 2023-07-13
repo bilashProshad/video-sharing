@@ -9,10 +9,12 @@ import ButtonNav from "../NavComponents/ButtonNav/ButtonNav";
 import { HiOutlineUpload } from "react-icons/hi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const Navbar = ({ onExpandSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
-  const auth = true;
+
+  const { user } = useAuthContext();
 
   const navigate = useNavigate();
 
@@ -48,7 +50,7 @@ const Navbar = ({ onExpandSidebar }) => {
               <AiOutlineSearch /> <span>Search</span>
             </ButtonNav>
           </li>
-          {auth ? (
+          {user ? (
             <>
               <li>
                 <ButtonNav
