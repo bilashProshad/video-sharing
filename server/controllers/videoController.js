@@ -5,19 +5,23 @@ import { ErrorHandler } from "../utils/ErrorHandler.js";
 import cloudinary from "cloudinary";
 
 export const uploadVideo = catchAsyncErrors(async (req, res, next) => {
-  const { title, description, thumbnail } = req.body;
+  const { title, description } = req.body;
 
-  if (!title || !description || !thumbnail || !req.body.video) {
+  const b64 = Buffer.from(req.file.buffer).toString("base64");
+  let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+
+  if (!title || !description) {
     return next(new ErrorHandler(400, "Every field is required!"));
   }
 
-  const uploadedThumbnail = await cloudinary.v2.uploader.upload(thumbnail, {
-    folder: "video-sharing-app/thumbnails",
-    aspect_ratio: "16:9",
-    crop: "thumb",
-  });
+  // const uploadedThumbnail = await cloudinary.v2.uploader.upload(thumbnail, {
+  //   folder: "video-sharing-app/thumbnails",
+  //   aspect_ratio: "16:9",
+  //   crop: "thumb",
+  // });
 
-  const uploadedVideo = await cloudinary.v2.uploader.upload(req.body.video, {
+  const uploadedVideo = await cloudinary.v2.uploader.upload(dataURI, {
+    resource_type: "video",
     folder: "video-sharing-app/videos",
   });
 
@@ -25,10 +29,6 @@ export const uploadVideo = catchAsyncErrors(async (req, res, next) => {
     title,
     description,
     uploader: req.user._id,
-    thumbnail: {
-      public_id: uploadedThumbnail.public_id,
-      url: uploadedThumbnail.secure_url,
-    },
     video: {
       public_id: uploadedVideo.public_id,
       url: uploadedVideo.secure_url,

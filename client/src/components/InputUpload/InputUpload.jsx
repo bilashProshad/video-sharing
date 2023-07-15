@@ -17,7 +17,6 @@ const InputUpload = ({
       <input
         type="file"
         id={id}
-        multiple
         name={name}
         accept={accept}
         onChange={onChange}

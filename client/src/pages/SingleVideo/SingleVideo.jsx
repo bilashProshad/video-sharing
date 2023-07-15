@@ -16,7 +16,13 @@ const SingleVideo = () => {
     <Layout showSidebar={false} showSidebarSlider={true} expand={false}>
       <div className="single-video">
         <div className="content">
-          <video src={video} controls muted autoPlay></video>
+          <video
+            src={video}
+            controls
+            muted
+            autoPlay
+            controlsList="nodownload"
+          ></video>
           <h1 className="title">Get to Know Photoshop CC</h1>
           <div className="info">
             <div className="channel">

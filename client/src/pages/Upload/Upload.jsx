@@ -1,38 +1,65 @@
 import "./Upload.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../components/Input/Input";
 import Layout from "../../components/Layout/Layout";
 import InputUpload from "../../components/InputUpload/InputUpload";
 import Textarea from "../../components/Textarea/Textarea";
 import Button from "../../components/Button/Button";
 import { FiUpload } from "react-icons/fi";
+import toast from "react-hot-toast";
+import api from "../../http";
+import { useNavigate } from "react-router-dom";
 
 const Upload = () => {
   const [video, setVideo] = useState("");
   const [videoPreview, setVideoPreview] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
   const [titleError, setTitleError] = useState(false);
-  const [descriptionError, setDescriptionError] = useState("");
+  const [descriptionError, setDescriptionError] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const [error, setError] = useState(false);
 
+  const navigate = useNavigate();
+
   const setVideoFile = (e) => {
+    setVideo(e.target.files[0]);
     const reader = new FileReader();
 
     reader.onload = () => {
       if (reader.readyState === 2) {
         setVideoPreview(reader.result);
-        setVideo(reader.result);
       }
     };
 
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  const onSubmitHandler = (e) => {
+  useEffect(() => {
+    if (title.length > 0) {
+      setTitleError(false);
+    }
+
+    if (description.length > 0) {
+      setDescriptionError(false);
+    }
+
+    if (video.length > 0) {
+      setVideoError(false);
+    }
+  }, [description, title, video]);
+
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    if (!video) {
+      setError(true);
+      setVideoError(true);
+      return;
+    }
 
     if (!title) {
       setError(true);
@@ -44,6 +71,27 @@ const Upload = () => {
       setError(true);
       setDescriptionError(true);
       return;
+    }
+
+    const myForm = new FormData();
+    myForm.append("title", title);
+    myForm.append("description", description);
+    myForm.append("video", video);
+
+    const config = {
+      headers: { "Content-Type": "multipart/form-data" },
+      withCredentials: true,
+    };
+
+    try {
+      setLoading(true);
+      const { data } = await api.post(`/api/v1/videos`, myForm, config);
+      setLoading(false);
+      navigate(`/${data.video._id}`);
+    } catch (error) {
+      toast.error("Video upload has been failed");
+      toast.error(error.response.data.message);
+      setLoading(false);
     }
   };
 
@@ -62,6 +110,9 @@ const Upload = () => {
                 accept="video/*"
                 onChange={setVideoFile}
               />
+              {error && videoError && (
+                <span>*** Please select a video file</span>
+              )}
             </div>
             <div className="input-box">
               <Input
@@ -83,7 +134,7 @@ const Upload = () => {
                 <span>*** Please enter video description</span>
               )}
             </div>
-            <Button type="submit" width="w-max">
+            <Button type="submit" width="w-max" loading={loading}>
               <FiUpload strokeWidth={"3px"} /> Upload
             </Button>
           </form>

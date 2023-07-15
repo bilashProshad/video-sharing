@@ -5,9 +5,7 @@ import { userRoutes } from "./routes/userRoutes.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import cookieParser from "cookie-parser";
 import { videoRoutes } from "./routes/videoRoutes.js";
-import cloudinary from "cloudinary";
-import bodyParser from "body-parser";
-import fileUpload from "express-fileupload";
+import morgan from "morgan";
 import cors from "cors";
 
 const app = express();
@@ -26,17 +24,12 @@ const corsOption = {
   credentials: true,
   origin: [process.env.FRONT_END_URL],
 };
+
 app.use(cors(corsOption));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(fileUpload());
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_SECRET,
-});
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("Welcome to video sharing platfrom");

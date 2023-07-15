@@ -11,9 +11,15 @@ import {
   uploadVideo,
   videosByTag,
 } from "../controllers/videoController.js";
+import multer from "multer";
+import { storage } from "../cloudinary/index.js";
+
+const upload = multer({ storage });
 const router = express.Router();
 
-router.route("/").post(isAuthenticatedUser, uploadVideo);
+router
+  .route("/")
+  .post(isAuthenticatedUser, upload.single("video"), uploadVideo);
 router
   .route("/:id")
   .put(isAuthenticatedUser, updateVideo)
