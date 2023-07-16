@@ -104,10 +104,17 @@ export const trendingVideos = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const randomVideos = catchAsyncErrors(async (req, res, next) => {
-  const videos = await Video.aggregate([{ $sample: { size: 40 } }]).populate(
-    "uploader",
-    "name email avatar"
-  );
+  let videos = await Video.aggregate([{ $sample: { size: 40 } }]);
+
+  // .populate(
+  //   "uploader",
+  //   "name email avatar"
+  // );
+
+  videos = await User.populate(videos, {
+    path: "uploader",
+    select: "name email avatar",
+  });
   res.status(200).json({ success: true, videos });
 });
 

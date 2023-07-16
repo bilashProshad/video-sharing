@@ -1,7 +1,9 @@
 import "./VideoCard.scss";
 import { Link } from "react-router-dom";
+import ReactTimeAgo from "react-time-ago";
 
 const VideoCard = ({
+  id,
   title,
   thumbnail,
   channelName,
@@ -10,19 +12,19 @@ const VideoCard = ({
   verticle = false,
 }) => {
   return (
-    <Link
-      to={`/sv12jlklsdf239843`}
-      className={`video-card ${verticle ? "verticle" : ""}`}
-    >
+    <Link to={`/${id}`} className={`video-card ${verticle ? "verticle" : ""}`}>
       <div className="top">
         <img src={thumbnail} alt={"thumbnail"} />
       </div>
       <div className="bottom">
         <h3 className="title">{title}</h3>
         <div className="body">
-          <Link to={`/`}>{channelName}</Link>
+          <p>{channelName}</p>
           <p>
-            <span>{views}</span> - <span>{date}</span>
+            <span>{views}</span> -{" "}
+            <span>
+              <ReactTimeAgo date={new Date(date).getTime()} locale="en-US" />
+            </span>
           </p>
         </div>
       </div>

@@ -1,75 +1,23 @@
 import "./Videos.scss";
 import VideoCard from "../VideoCard/VideoCard";
 import thumbnail1 from "../../assets/thumbnail-1.png";
-import thumbnail2 from "../../assets/thumbnail-2.png";
-import thumbnail3 from "../../assets/thumbnail-3.png";
 
-const Videos = () => {
+// eslint-disable-next-line react/prop-types
+const Videos = ({ videos = [] }) => {
   return (
     <div className="videos">
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
-
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail2}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
-
-      <VideoCard
-        title={`Get to know Photoshop CC Get to know Photoshop CC Get to know Photoshop CC Get to know Photoshop CC Get to know Photoshop CC`}
-        thumbnail={thumbnail3}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
-
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
-
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail2}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
-
-      <VideoCard
-        title={`Get to know Photoshop CC Get to know Photoshop CC Get to know Photoshop CC Get to know Photoshop CC Get to know Photoshop CC`}
-        thumbnail={thumbnail3}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
-
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
-
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail2}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-      />
+      {videos.length > 0 &&
+        videos.map((video) => (
+          <VideoCard
+            key={video._id}
+            id={video._id}
+            title={video.title}
+            thumbnail={thumbnail1}
+            channelName={video.uploader.name}
+            views={video.views}
+            date={video.createdAt}
+          />
+        ))}
     </div>
   );
 };

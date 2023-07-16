@@ -3,7 +3,8 @@ import VideoCard from "../VideoCard/VideoCard";
 import thumbnail1 from "../../assets/thumbnail-1.png";
 import { useEffect, useState } from "react";
 
-const Recommendation = () => {
+// eslint-disable-next-line react/prop-types
+const Recommendation = ({ videos = [] }) => {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -20,78 +21,19 @@ const Recommendation = () => {
 
   return (
     <div className="recommendation">
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CCf saddfsaaaa aaaaaaa aaaaaaaaaaaaa aaaa aaaaaaa`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CCf saddfsaaaa aaaaaaa aaaaaaaaaaaaa aaaa aaaaaaa`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CCf saddfsaaaa aaaaaaa aaaaaaaaaaaaa aaaa aaaaaaa`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
-      <VideoCard
-        title={`Get to know Photoshop CC`}
-        thumbnail={thumbnail1}
-        channelName={`Adobe Creative Cloud`}
-        views={`27K Views`}
-        date={`1 year ago`}
-        verticle={windowSize > 950 ? true : false}
-      />
+      {videos.length > 0 &&
+        videos.map((video) => (
+          <VideoCard
+            key={video._id}
+            id={video._id}
+            title={video.title}
+            thumbnail={thumbnail1}
+            channelName={video.uploader.name}
+            views={video.views}
+            date={video.createdAt}
+            verticle={windowSize > 950 ? true : false}
+          />
+        ))}
     </div>
   );
 };
