@@ -4,6 +4,7 @@ import Videos from "../../components/Videos/Videos";
 import "./Trending.scss";
 import api from "../../http";
 import { toast } from "react-hot-toast";
+import Loading from "../../components/Loading/Loading";
 
 const Trending = () => {
   const [videos, setVideos] = useState([]);
@@ -30,7 +31,7 @@ const Trending = () => {
       <div className="trending">
         {loading ? (
           <>
-            <h2>Loading</h2>
+            <Loading />
           </>
         ) : (
           <Videos videos={videos} />

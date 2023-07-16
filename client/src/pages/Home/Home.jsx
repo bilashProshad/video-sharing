@@ -4,6 +4,7 @@ import Videos from "../../components/Videos/Videos";
 import { useEffect, useState } from "react";
 import api from "../../http";
 import toast from "react-hot-toast";
+import Loading from "../../components/Loading/Loading";
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -31,7 +32,7 @@ const Home = () => {
         <div className="home">
           {loading ? (
             <>
-              <h2>Loading</h2>
+              <Loading />
             </>
           ) : (
             <Videos videos={videos} />

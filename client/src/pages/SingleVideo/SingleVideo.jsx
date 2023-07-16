@@ -12,6 +12,7 @@ import Comments from "../../components/Comments/Comments";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../../http";
+import Loading from "../../components/Loading/Loading";
 
 const SingleVideo = () => {
   const [loading, setLoading] = useState(false);
@@ -40,7 +41,7 @@ const SingleVideo = () => {
   return (
     <Layout showSidebar={false} showSidebarSlider={true} expand={false}>
       {loading ? (
-        <h2>Loading</h2>
+        <Loading />
       ) : (
         video && (
           <>
