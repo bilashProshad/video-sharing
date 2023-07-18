@@ -58,12 +58,30 @@
     }
   }
 
+  &.outlined {
+    color: #1e71ff;
+    border: 1px solid #1e71ff;
+
+    &:hover {
+      background-color: hsl(218, 100%, 96%);
+    }
+  }
+
   &.outlined.danger {
     color: hsl(4, 90%, 48%);
     border: 1px solid hsl(4, 90%, 48%);
 
     &:hover {
       background-color: hsl(4, 90%, 98%);
+    }
+  }
+
+  &.outlined.light {
+    color: #939393;
+    border: 1px solid #93939394;
+
+    &:hover {
+      background-color: hsl(0, 0%, 95%);
     }
   }
 

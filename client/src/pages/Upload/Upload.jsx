@@ -17,10 +17,13 @@ const Upload = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [tag, setTag] = useState("");
+  const [tags, setTags] = useState([]);
 
   const [titleError, setTitleError] = useState(false);
   const [descriptionError, setDescriptionError] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [tagsError, setTagsError] = useState(false);
   const [error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -50,7 +53,20 @@ const Upload = () => {
     if (video.length > 0) {
       setVideoError(false);
     }
-  }, [description, title, video]);
+
+    if (tags.length > 0) {
+      setTagsError(false);
+    }
+  }, [description, title, video, tags]);
+
+  const addTagHandler = () => {
+    setTags([...tags, tag]);
+    setTag("");
+  };
+
+  const removeTagHandler = (t) => {
+    setTags(tags.filter((tag) => tag !== t));
+  };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -73,10 +89,17 @@ const Upload = () => {
       return;
     }
 
+    if (tags.length <= 0) {
+      setError(true);
+      setTagsError(true);
+      return;
+    }
+
     const myForm = new FormData();
     myForm.append("title", title);
     myForm.append("description", description);
     myForm.append("video", video);
+    myForm.append("tags", JSON.stringify(tags));
 
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
@@ -125,6 +148,42 @@ const Upload = () => {
               )}
             </div>
             <div className="input-box">
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: "1rem",
+                }}
+              >
+                <Input
+                  label="Tags"
+                  width="100%"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                  required={tags.length <= 0}
+                />
+                <Button
+                  variant="outlined"
+                  color="light"
+                  onClick={addTagHandler}
+                >
+                  Add
+                </Button>
+              </div>
+              {tags.length > 0 && (
+                <div className="tags">
+                  {tags.map((tag, i) => (
+                    <button key={i} onClick={() => removeTagHandler(tag)}>
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {error && tagsError && (
+                <span>*** Please add at least one tag</span>
+              )}
+            </div>
+            <div className="input-box">
               <Textarea
                 label="Description"
                 value={description}
@@ -134,6 +193,7 @@ const Upload = () => {
                 <span>*** Please enter video description</span>
               )}
             </div>
+
             <Button type="submit" width="w-max" loading={loading}>
               <FiUpload strokeWidth={"3px"} /> Upload
             </Button>

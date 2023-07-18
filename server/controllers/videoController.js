@@ -7,13 +7,16 @@ import jwt from "jsonwebtoken";
 
 export const uploadVideo = catchAsyncErrors(async (req, res, next) => {
   const { title, description } = req.body;
+  let tags = req.body.tags;
 
   const b64 = Buffer.from(req.file.buffer).toString("base64");
   let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
 
-  if (!title || !description) {
+  if (!title || !description || !tags) {
     return next(new ErrorHandler(400, "Every field is required!"));
   }
+
+  tags = JSON.parse(tags);
 
   // const uploadedThumbnail = await cloudinary.v2.uploader.upload(thumbnail, {
   //   folder: "video-sharing-app/thumbnails",
@@ -34,6 +37,7 @@ export const uploadVideo = catchAsyncErrors(async (req, res, next) => {
       public_id: uploadedVideo.public_id,
       url: uploadedVideo.secure_url,
     },
+    tags,
   });
 
   res.status(201).json({

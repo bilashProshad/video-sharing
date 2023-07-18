@@ -17,7 +17,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       className={`button ${className} ${variant} ${color} ${width} ${
-        loading ? "loading" : ""
+        loading ? "" : ""
       }`}
       {...rest}
       disabled={loading}
