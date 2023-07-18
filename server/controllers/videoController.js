@@ -85,7 +85,7 @@ export const deleteVideo = catchAsyncErrors(async (req, res, next) => {
 export const getVideo = catchAsyncErrors(async (req, res, next) => {
   const video = await Video.findById(req.params.id).populate(
     "uploader",
-    "name email avatar"
+    "name email avatar subscribers"
   );
 
   if (!video) {

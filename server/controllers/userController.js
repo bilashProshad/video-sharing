@@ -99,23 +99,33 @@ export const unsubscribe = catchAsyncErrors(async (req, res, next) => {
 export const like = catchAsyncErrors(async (req, res, next) => {
   const id = req.user._id;
 
-  await Video.findByIdAndUpdate(req.params.id, {
-    $addToSet: { likes: id },
-    $pull: { dislikes: id },
-  });
+  const video = await Video.findByIdAndUpdate(
+    req.params.id,
+    {
+      $addToSet: { likes: id },
+      $pull: { dislikes: id },
+    },
+    { new: true }
+  ).populate("uploader", "name email avatar subscribers");
 
-  res.status(200).json({ success: true, message: "The video has been liked." });
+  res
+    .status(200)
+    .json({ success: true, video, message: "The video has been liked." });
 });
 
 export const unlike = catchAsyncErrors(async (req, res, next) => {
   const id = req.user._id;
 
-  await Video.findByIdAndUpdate(req.params.id, {
-    $addToSet: { dislikes: id },
-    $pull: { likes: id },
-  });
+  const video = await Video.findByIdAndUpdate(
+    req.params.id,
+    {
+      $addToSet: { dislikes: id },
+      $pull: { likes: id },
+    },
+    { new: true }
+  ).populate("uploader", "name email avatar subscribers");
 
   res
     .status(200)
-    .json({ success: true, message: "The video has been disliked." });
+    .json({ success: true, video, message: "The video has been disliked." });
 });

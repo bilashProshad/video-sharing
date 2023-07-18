@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import api from "../../http";
 import Loading from "../../components/Loading/Loading";
+import formatValue from "../../utils/formatValue";
 
 const SingleVideo = () => {
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,16 @@ const SingleVideo = () => {
     fetchVideo();
   }, [id]);
 
+  const likeHandler = async () => {
+    const { data } = await api.put(`/api/v1/user/like/${id}`);
+    setVideo(data.video);
+  };
+
+  const unlikeHandler = async () => {
+    const { data } = await api.put(`/api/v1/user/unlike/${id}`);
+    setVideo(data.video);
+  };
+
   return (
     <Layout showSidebar={false} showSidebarSlider={true} expand={false}>
       {loading ? (
@@ -61,20 +72,23 @@ const SingleVideo = () => {
                       <img src={profile} alt="channel" />
                       <Link to={`/`}>
                         <h4>{video?.uploader?.name}</h4>
-                        <small>2.49M subscribers</small>
+                        <small>
+                          {formatValue(video?.uploader?.subscribers)}{" "}
+                          subscribers
+                        </small>
                       </Link>
                     </div>
                     <button className="subscribe-btn">Subscribe</button>
                   </div>
                   <div className="actions">
                     <div className="reaction-buttons">
-                      <button>
+                      <button onClick={likeHandler}>
                         <AiOutlineLike />
-                        <span>{video?.likes?.length}</span>
+                        <span>{formatValue(video?.likes?.length)}</span>
                       </button>
-                      <button>
+                      <button onClick={unlikeHandler}>
                         <AiOutlineDislike />
-                        <span>{video?.dislikes?.length}</span>
+                        <span>{formatValue(video?.dislikes?.length)}</span>
                       </button>
                     </div>
                     <button>
