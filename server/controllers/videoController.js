@@ -3,6 +3,7 @@ import { User } from "../models/User.js";
 import { Video } from "../models/Video.js";
 import { ErrorHandler } from "../utils/ErrorHandler.js";
 import cloudinary from "cloudinary";
+import jwt from "jsonwebtoken";
 
 export const uploadVideo = catchAsyncErrors(async (req, res, next) => {
   const { title, description } = req.body;
@@ -83,16 +84,48 @@ export const deleteVideo = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const getVideo = catchAsyncErrors(async (req, res, next) => {
+  let liked = false;
+  let disliked = false;
+  let subscribed = false;
+
   const video = await Video.findById(req.params.id).populate(
     "uploader",
     "name email avatar subscribers"
   );
 
   if (!video) {
-    return next(new ErrorHandler(404, "Video not found!"));
+    return next(new ErrorHandler(404, "Videos not found!"));
   }
 
-  res.status(200).json({ success: true, video });
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res
+      .status(200)
+      .json({ success: true, video, liked, disliked, subscribed });
+  }
+
+  const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+
+  const isUserSubscribed = await User.findOne({
+    _id: video.uploader._id,
+    subscribedUsers: decodedData.id,
+  });
+  subscribed = !!isUserSubscribed;
+
+  const isUserLiked = await Video.findOne({
+    _id: req.params.id,
+    likes: decodedData.id,
+  });
+  liked = !!isUserLiked;
+
+  const isUserDisliked = await Video.findOne({
+    _id: req.params.id,
+    dislikes: decodedData.id,
+  });
+  disliked = !!isUserDisliked;
+
+  res.status(200).json({ success: true, video, liked, disliked, subscribed });
 });
 
 export const trendingVideos = catchAsyncErrors(async (req, res, next) => {

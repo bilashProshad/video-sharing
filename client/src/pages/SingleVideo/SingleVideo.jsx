@@ -1,7 +1,12 @@
 import Layout from "../../components/Layout/Layout";
 import "./SingleVideo.scss";
 import profile from "../../assets/profile.png";
-import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
+import {
+  AiOutlineLike,
+  AiOutlineDislike,
+  AiFillLike,
+  AiFillDislike,
+} from "react-icons/ai";
 import { PiShareFatLight } from "react-icons/pi";
 import { CgPlayListAdd } from "react-icons/cg";
 import { Link, useParams } from "react-router-dom";
@@ -14,18 +19,27 @@ import toast from "react-hot-toast";
 import api from "../../http";
 import Loading from "../../components/Loading/Loading";
 import formatValue from "../../utils/formatValue";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 const SingleVideo = () => {
   const [loading, setLoading] = useState(false);
   const [video, setVideo] = useState(null);
   const [videos, setVideos] = useState([]);
+  const [liked, setLiked] = useState(false);
+  const [disLiked, setDisLiked] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
   const { id } = useParams();
+
+  const { user: currentUser } = useAuthContext();
 
   useEffect(() => {
     const fetchVideo = async () => {
       try {
         setLoading(true);
         const { data } = await api.get(`/api/v1/videos/${id}`);
+        setLiked(data.liked);
+        setDisLiked(data.disliked);
+        setSubscribed(data.subscribed);
         const { data: similarVideos } = await api.get(`/api/v1/videos/random`);
         setVideo(data.video);
         setVideos(similarVideos.videos);
@@ -40,13 +54,75 @@ const SingleVideo = () => {
   }, [id]);
 
   const likeHandler = async () => {
-    const { data } = await api.put(`/api/v1/user/like/${id}`);
-    setVideo(data.video);
+    try {
+      await api.put(`/api/v1/user/like/${id}`);
+      setVideo({
+        ...video,
+        likes: [...video.likes, currentUser._id],
+        dislikes: video.dislikes.filter((id) => currentUser._id !== id),
+      });
+      setLiked(true);
+      setDisLiked(false);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   const unlikeHandler = async () => {
-    const { data } = await api.put(`/api/v1/user/unlike/${id}`);
-    setVideo(data.video);
+    try {
+      await api.put(`/api/v1/user/unlike/${id}`);
+      setVideo({
+        ...video,
+        dislikes: [...video.dislikes, currentUser._id],
+        likes: video.likes.filter((id) => currentUser._id !== id),
+      });
+      setLiked(false);
+      setDisLiked(true);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const subscribeHandler = async () => {
+    if (currentUser._id === video.uploader._id) {
+      toast.error("You can't subscribe your own channel");
+      return;
+    }
+
+    try {
+      await api.put(`/api/v1/user/sub/${video.uploader._id}`);
+      setSubscribed(true);
+      setVideo({
+        ...video,
+        uploader: {
+          ...video.uploader,
+          subscribers: video.uploader.subscribers + 1,
+        },
+      });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const unSubscribeHandler = async () => {
+    if (currentUser._id === video.uploader._id) {
+      toast.error("You can't unsubscribe your own channel");
+      return;
+    }
+
+    try {
+      await api.put(`/api/v1/user/unsub/${video.uploader._id}`);
+      setSubscribed(false);
+      setVideo({
+        ...video,
+        uploader: {
+          ...video.uploader,
+          subscribers: video.uploader.subscribers - 1,
+        },
+      });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   };
 
   return (
@@ -78,16 +154,30 @@ const SingleVideo = () => {
                         </small>
                       </Link>
                     </div>
-                    <button className="subscribe-btn">Subscribe</button>
+                    {subscribed ? (
+                      <button
+                        className="subscribe-btn"
+                        onClick={unSubscribeHandler}
+                      >
+                        Subscribed
+                      </button>
+                    ) : (
+                      <button
+                        className="subscribe-btn"
+                        onClick={subscribeHandler}
+                      >
+                        Subscribe
+                      </button>
+                    )}
                   </div>
                   <div className="actions">
                     <div className="reaction-buttons">
                       <button onClick={likeHandler}>
-                        <AiOutlineLike />
+                        {liked ? <AiFillLike /> : <AiOutlineLike />}
                         <span>{formatValue(video?.likes?.length)}</span>
                       </button>
                       <button onClick={unlikeHandler}>
-                        <AiOutlineDislike />
+                        {disLiked ? <AiFillDislike /> : <AiOutlineDislike />}
                         <span>{formatValue(video?.dislikes?.length)}</span>
                       </button>
                     </div>

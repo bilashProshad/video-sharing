@@ -75,6 +75,10 @@ export const getUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const subscribe = catchAsyncErrors(async (req, res, next) => {
+  if (req.user._id === req.params.id) {
+    return next(new ErrorHandler(400, "You can't subscribe your own channel"));
+  }
+
   await User.findByIdAndUpdate(req.user._id, {
     $push: { subscribedUsers: req.params.id },
   });
@@ -85,6 +89,12 @@ export const subscribe = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const unsubscribe = catchAsyncErrors(async (req, res, next) => {
+  if (req.user._id === req.params.id) {
+    return next(
+      new ErrorHandler(400, "You can't unsubscribe your own channel")
+    );
+  }
+
   await User.findByIdAndUpdate(req.user._id, {
     $pull: { subscribedUsers: req.params.id },
   });
@@ -99,33 +109,23 @@ export const unsubscribe = catchAsyncErrors(async (req, res, next) => {
 export const like = catchAsyncErrors(async (req, res, next) => {
   const id = req.user._id;
 
-  const video = await Video.findByIdAndUpdate(
-    req.params.id,
-    {
-      $addToSet: { likes: id },
-      $pull: { dislikes: id },
-    },
-    { new: true }
-  ).populate("uploader", "name email avatar subscribers");
+  await Video.findByIdAndUpdate(req.params.id, {
+    $addToSet: { likes: id },
+    $pull: { dislikes: id },
+  });
 
-  res
-    .status(200)
-    .json({ success: true, video, message: "The video has been liked." });
+  res.status(200).json({ success: true, message: "The video has been liked." });
 });
 
 export const unlike = catchAsyncErrors(async (req, res, next) => {
   const id = req.user._id;
 
-  const video = await Video.findByIdAndUpdate(
-    req.params.id,
-    {
-      $addToSet: { dislikes: id },
-      $pull: { likes: id },
-    },
-    { new: true }
-  ).populate("uploader", "name email avatar subscribers");
+  await Video.findByIdAndUpdate(req.params.id, {
+    $addToSet: { dislikes: id },
+    $pull: { likes: id },
+  });
 
   res
     .status(200)
-    .json({ success: true, video, message: "The video has been disliked." });
+    .json({ success: true, message: "The video has been disliked." });
 });
