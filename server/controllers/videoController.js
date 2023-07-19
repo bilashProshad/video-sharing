@@ -184,3 +184,15 @@ export const search = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({ success: true, videos });
 });
+
+export const channelVideos = catchAsyncErrors(async (req, res, next) => {
+  const id = req.params.id;
+
+  const videos = await Video.find({ uploader: id });
+
+  if (!videos) {
+    return next(new ErrorHandler(404, "Videos not found"));
+  }
+
+  res.status(200).json({ success: true, videos });
+});

@@ -1,6 +1,7 @@
 import express from "express";
 import { isAuthenticatedUser } from "../middlewares/auth.js";
 import {
+  channelVideos,
   deleteVideo,
   getVideo,
   randomVideos,
@@ -25,6 +26,7 @@ router.route("/random").get(randomVideos);
 router.route("/subscribed").get(isAuthenticatedUser, subscribed);
 router.route("/tags").get(videosByTag);
 router.route("/search").get(search);
+router.route("/channel/:id").get(channelVideos);
 router
   .route("/:id")
   .put(isAuthenticatedUser, updateVideo)
