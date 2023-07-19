@@ -44,6 +44,14 @@
     }
   }
 
+  &.filled.light {
+    background-color: #f0f0f0;
+
+    &:hover {
+      background-color: #e4e2e2;
+    }
+  }
+
   &.empty.primary {
     color: #1e71ff;
     &:hover {

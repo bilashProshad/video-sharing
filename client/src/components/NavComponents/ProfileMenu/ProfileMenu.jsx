@@ -53,7 +53,7 @@ const ProfileMenu = () => {
             <Link to={`/profile`}>Profile</Link>
           </li>
           <li>
-            <Link to={`/`}>Dashboard</Link>
+            <Link to={`/channel`}>Channel</Link>
           </li>
           <li>
             <button onClick={logoutHandler}>Logout</button>

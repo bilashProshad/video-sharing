@@ -11,6 +11,7 @@ import Subscriptions from "./pages/Subscriptions/Subscriptions";
 import PublicRoute from "./components/PublicRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
+import MyChannel from "./pages/MyChannel/MyChannel";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/subscriptions" element={<Subscriptions />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/channel" element={<MyChannel />} />
         </Route>
       </Routes>
 
