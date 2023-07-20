@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../../components/Input/Input";
 import Layout from "../../components/Layout/Layout";
 import "./Profile.scss";
 import avatar from "../../assets/profile.png";
 import Button from "../../components/Button/Button";
+import { useAuthContext } from "../../contexts/AuthContext";
+import api from "../../http";
+import { toast } from "react-hot-toast";
+import {
+  CLEAR_ERROR,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+} from "../../contexts/Actions/AuthActions";
 
 const Profile = () => {
-  const [name, setName] = useState("Bilash Prosad");
-  const [email, setEmail] = useState("pbilash64@gmail.com");
+  const { user, dispatch, loading, error: updateError } = useAuthContext();
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
 
   const [edit, setEdit] = useState(false);
 
@@ -15,7 +25,14 @@ const Profile = () => {
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
 
-  const submitHandler = (e) => {
+  useEffect(() => {
+    if (updateError) {
+      toast.error(updateError);
+      dispatch({ type: CLEAR_ERROR });
+    }
+  }, [updateError, dispatch]);
+
+  const submitHandler = async (e) => {
     e.preventDefault();
 
     if (!name) {
@@ -28,6 +45,19 @@ const Profile = () => {
       setError(true);
       setEmailError(true);
       return;
+    }
+
+    try {
+      dispatch({ type: UPDATE_USER_REQUEST });
+      const { data } = await api.put(`/api/v1/user`, { name, email });
+      dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
+      setEdit(false);
+      toast.success("The user updated successfully.");
+    } catch (error) {
+      dispatch({
+        type: UPDATE_USER_FAIL,
+        payload: error.response.data.message,
+      });
     }
   };
 
@@ -73,7 +103,7 @@ const Profile = () => {
                 </Button>
               )}
               {edit && (
-                <Button type="submit" width="w-max">
+                <Button type="submit" width="w-max" loading={loading}>
                   Update
                 </Button>
               )}

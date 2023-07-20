@@ -1,0 +1,73 @@
+.channel {
+  .channel-container {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(204, 204, 204, 0.481);
+
+    .wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 130rem;
+      margin: 0 auto;
+
+      .info {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        .image {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          overflow: hidden;
+
+          > img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+          }
+        }
+
+        .body {
+          h2 {
+            margin-bottom: 1rem;
+          }
+
+          p > span {
+            font-weight: 500;
+          }
+
+          p {
+            margin-bottom: 0.3rem;
+          }
+        }
+      }
+
+      > .buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  .video-list {
+    max-width: 130rem;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .my-channel {
+    padding: 1rem;
+
+    > .channel-container > .wrapper > .info {
+      > .image {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+}

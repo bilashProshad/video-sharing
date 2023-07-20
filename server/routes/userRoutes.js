@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getProfile,
   getUser,
   like,
   login,
@@ -8,6 +9,7 @@ import {
   subscribe,
   unlike,
   unsubscribe,
+  updateProfile,
 } from "../controllers/userController.js";
 import { isAuthenticatedUser } from "../middlewares/auth.js";
 const router = express.Router();
@@ -15,6 +17,10 @@ const router = express.Router();
 router.route("/register").post(register);
 router.route("/login").post(login);
 router.route("/logout").get(logout);
+router
+  .route("/")
+  .post(isAuthenticatedUser, getProfile)
+  .put(isAuthenticatedUser, updateProfile);
 
 router.route("/find/:id").get(getUser);
 router.route("/sub/:id").put(isAuthenticatedUser, subscribe);

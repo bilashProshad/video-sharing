@@ -74,6 +74,30 @@ export const getUser = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({ success: true, user });
 });
 
+export const getProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+
+  if (!user) {
+    return next(new ErrorHandler(404, "User not found"));
+  }
+
+  res.status(200).json({ success: true, user });
+});
+
+export const updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const { name, email } = req.body;
+  const user = await User.findByIdAndUpdate(
+    req.user._id,
+    { name, email },
+    { new: true }
+  );
+  if (!user) {
+    return next(new ErrorHandler(404, "User not found"));
+  }
+
+  res.status(200).json({ success: true, user });
+});
+
 export const subscribe = catchAsyncErrors(async (req, res, next) => {
   if (req.user._id === req.params.id) {
     return next(new ErrorHandler(400, "You can't subscribe your own channel"));

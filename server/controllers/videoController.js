@@ -48,19 +48,20 @@ export const uploadVideo = catchAsyncErrors(async (req, res, next) => {
 
 export const updateVideo = catchAsyncErrors(async (req, res, next) => {
   const { title, description } = req.body;
+  const tags = JSON.parse(req.body.tags);
 
   let video = await Video.findById(req.params.id);
   if (!video) {
     return next(new ErrorHandler(404, "Video not found!"));
   }
 
-  if (req.user._id !== video.uploader) {
+  if (!req.user._id.equals(video.uploader)) {
     return next(new ErrorHandler(403, "You can upload only your video!"));
   }
 
   video = await Video.findByIdAndUpdate(
     req.params.id,
-    { title, description },
+    { title, description, tags },
     { new: true }
   );
 

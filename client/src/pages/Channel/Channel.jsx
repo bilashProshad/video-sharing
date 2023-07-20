@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import Layout from "../../components/Layout/Layout";
-import "./MyChannel.scss";
+import "./Channel.scss";
 import Loading from "../../components/Loading/Loading";
 import { toast } from "react-hot-toast";
 import api from "../../http";
 import { useAuthContext } from "../../contexts/AuthContext";
+import Videos from "../../components/Videos/Videos";
 import formatValue from "../../utils/formatValue";
 import profile from "../../assets/thumbnail-1.png";
 import Button from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
-import ChannelVideos from "../../components/ChannelVideos/ChannelVideos";
 
-const MyChannel = () => {
+const Channel = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +38,7 @@ const MyChannel = () => {
 
   return (
     <Layout>
-      <div className="my-channel">
+      <div className="channel">
         <div className="channel-container">
           <div className="wrapper">
             <div className="info">
@@ -77,7 +77,7 @@ const MyChannel = () => {
         {loading && <Loading />}
         {!loading && videos.length > 0 && (
           <div className="video-list">
-            <ChannelVideos videos={videos} />
+            <Videos videos={videos} />
           </div>
         )}
       </div>
@@ -85,4 +85,4 @@ const MyChannel = () => {
   );
 };
 
-export default MyChannel;
+export default Channel;

@@ -146,7 +146,7 @@ const SingleVideo = () => {
                   <div className="channel">
                     <div>
                       <img src={profile} alt="channel" />
-                      <Link to={`/`}>
+                      <Link to={`/channel/${id}/videos`}>
                         <h4>{video?.uploader?.name}</h4>
                         <small>
                           {formatValue(video?.uploader?.subscribers)}{" "}

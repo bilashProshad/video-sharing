@@ -9,6 +9,9 @@ import {
   REGISTER_FAIL,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
+  UPDATE_USER_FAIL,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
 } from "../Actions/AuthActions";
 
 export const AuthReducer = (state, action) => {
@@ -16,6 +19,7 @@ export const AuthReducer = (state, action) => {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
     case LOGOUT_REQUEST:
+    case UPDATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -23,6 +27,7 @@ export const AuthReducer = (state, action) => {
 
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
+    case UPDATE_USER_SUCCESS:
       return {
         ...state,
         user: action.payload,
@@ -32,6 +37,7 @@ export const AuthReducer = (state, action) => {
     case LOGIN_FAIL:
     case REGISTER_FAIL:
     case LOGOUT_FAIL:
+    case UPDATE_USER_FAIL:
       return {
         ...state,
         loading: false,
