@@ -157,7 +157,7 @@ const SingleVideo = () => {
                         }
                         alt={video?.uploader?.name}
                       />
-                      <Link to={`/channel/${id}/videos`}>
+                      <Link to={`/channel/${video.uploader._id}/videos`}>
                         <h4>{video?.uploader?.name}</h4>
                         <small>
                           {formatValue(video?.uploader?.subscribers)}{" "}

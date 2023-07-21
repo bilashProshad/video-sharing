@@ -9,7 +9,7 @@ import Videos from "../../components/Videos/Videos";
 import formatValue from "../../utils/formatValue";
 import profile from "../../assets/thumbnail-1.png";
 import Button from "../../components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Channel = () => {
   const [videos, setVideos] = useState([]);
@@ -17,14 +17,13 @@ const Channel = () => {
 
   const { user: currentUser } = useAuthContext();
   const navigate = useNavigate();
+  const { id } = useParams();
 
   useEffect(() => {
     async function fetchVideos() {
       try {
         setLoading(true);
-        const { data } = await api.get(
-          `/api/v1/videos/channel/${currentUser._id}`
-        );
+        const { data } = await api.get(`/api/v1/videos/channel/${id}`);
         setVideos(data.videos);
         setLoading(false);
       } catch (error) {
@@ -34,7 +33,7 @@ const Channel = () => {
     }
 
     fetchVideos();
-  }, [currentUser]);
+  }, [id]);
 
   return (
     <Layout>
