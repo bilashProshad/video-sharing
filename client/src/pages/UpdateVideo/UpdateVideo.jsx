@@ -173,7 +173,7 @@ const UpdateVideo = () => {
             </div>
 
             <Button type="submit" width="w-max" loading={loading}>
-              <FiUpload strokeWidth={"3px"} /> Upload
+              <FiUpload strokeWidth={"3px"} /> Update
             </Button>
           </form>
         </div>

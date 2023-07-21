@@ -135,8 +135,8 @@ export const subscribe = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler(400, "You can't subscribe your own channel"));
   }
 
-  await User.findByIdAndUpdate(req.user._id, {
-    $push: { subscribedUsers: req.params.id },
+  await User.findByIdAndUpdate(req.params.id, {
+    $push: { subscribedUsers: req.user._id },
   });
 
   await User.findByIdAndUpdate(req.params.id, { $inc: { subscribers: 1 } });
@@ -151,8 +151,8 @@ export const unsubscribe = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  await User.findByIdAndUpdate(req.user._id, {
-    $pull: { subscribedUsers: req.params.id },
+  await User.findByIdAndUpdate(req.params.id, {
+    $pull: { subscribedUsers: req.user._id },
   });
 
   await User.findByIdAndUpdate(req.params.id, { $inc: { subscribers: -1 } });
