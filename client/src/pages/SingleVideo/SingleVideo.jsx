@@ -145,7 +145,17 @@ const SingleVideo = () => {
                 <div className="info">
                   <div className="channel">
                     <div>
-                      <img src={profile} alt="channel" />
+                      <img
+                        src={
+                          video &&
+                          video.uploader &&
+                          video.uploader.avatar &&
+                          video.uploader.avatar.public_id
+                            ? video.uploader.avatar.url
+                            : profile
+                        }
+                        alt={video?.uploader?.name}
+                      />
                       <Link to={`/channel/${id}/videos`}>
                         <h4>{video?.uploader?.name}</h4>
                         <small>
@@ -196,7 +206,15 @@ const SingleVideo = () => {
                 </div>
                 <div className="all-comments">
                   <h3>247 Comments</h3>
-                  <CommentBox />
+                  <CommentBox
+                    profileImageUrl={
+                      currentUser &&
+                      currentUser.avatar &&
+                      currentUser.avatar.public_id
+                        ? currentUser.avatar.url
+                        : profile
+                    }
+                  />
                   <Comments />
                 </div>
               </div>

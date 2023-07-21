@@ -19,6 +19,9 @@ const Profile = () => {
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
 
+  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(avatar);
+
   const [edit, setEdit] = useState(false);
 
   const [error, setError] = useState(false);
@@ -26,11 +29,57 @@ const Profile = () => {
   const [emailError, setEmailError] = useState(false);
 
   useEffect(() => {
+    if (user && user.avatar && user.avatar.public_id) {
+      setImagePreview(user.avatar.url);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    async function updateImage(myForm) {
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      };
+      try {
+        dispatch({ type: UPDATE_USER_REQUEST });
+        const { data } = await api.put(`/api/v1/user/avatar`, myForm, config);
+        dispatch({ type: UPDATE_USER_SUCCESS, payload: data.user });
+        setEdit(false);
+        toast.success("The user updated successfully.");
+      } catch (error) {
+        dispatch({
+          type: UPDATE_USER_FAIL,
+          payload: error.response.data.message,
+        });
+      }
+    }
+
+    if (image) {
+      const myForm = new FormData();
+      myForm.append("image", image);
+      updateImage(myForm);
+    }
+  }, [image, dispatch]);
+
+  useEffect(() => {
     if (updateError) {
       toast.error(updateError);
       dispatch({ type: CLEAR_ERROR });
     }
   }, [updateError, dispatch]);
+
+  const setImageFile = (e) => {
+    setImage(e.target.files[0]);
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImagePreview(reader.result);
+      }
+    };
+
+    reader.readAsDataURL(e.target.files[0]);
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -65,7 +114,17 @@ const Profile = () => {
     <Layout>
       <div className="profile signin">
         <div className="form-container">
-          <img src={avatar} alt="" />
+          <label htmlFor="user-image">
+            <img src={imagePreview} alt={user?.name} />
+            <input
+              type="file"
+              name="image"
+              id="user-image"
+              style={{ display: "none" }}
+              accept="image/*"
+              onChange={setImageFile}
+            />
+          </label>
           <form onSubmit={submitHandler}>
             <div className="input-box">
               <Input

@@ -43,7 +43,16 @@ const MyChannel = () => {
           <div className="wrapper">
             <div className="info">
               <div className="image">
-                <img src={profile} alt="channel" />
+                <img
+                  src={
+                    currentUser &&
+                    currentUser.avatar &&
+                    currentUser.avatar.public_id
+                      ? currentUser.avatar.url
+                      : profile
+                  }
+                  alt={currentUser?.name}
+                />
               </div>
               <div className="body">
                 <h2>{currentUser?.name}</h2>

@@ -2,10 +2,13 @@
   height: calc(100vh - 7rem - 2rem);
 
   > .form-container {
-    > img {
+    > label > img {
       display: block;
       width: 15rem;
       height: 15rem;
+      border-radius: 50%;
+      overflow: hidden;
+      object-fit: cover;
       margin: 0 auto;
       cursor: pointer;
       margin-bottom: 2rem;

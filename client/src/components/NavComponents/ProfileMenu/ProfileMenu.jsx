@@ -17,7 +17,7 @@ import toast from "react-hot-toast";
 const ProfileMenu = () => {
   const [showMenu, setShowMenu] = useState(false);
 
-  const { dispatch, error } = useAuthContext();
+  const { dispatch, error, user } = useAuthContext();
 
   function showMenuHander() {
     setShowMenu(!showMenu);
@@ -44,7 +44,14 @@ const ProfileMenu = () => {
   return (
     <div className="profile-menu">
       <button onClick={showMenuHander}>
-        <img src={profile} alt="Profile" />
+        <img
+          src={
+            user && user.avatar && user.avatar.public_id
+              ? user.avatar.url
+              : profile
+          }
+          alt={user?.name}
+        />
       </button>
 
       {showMenu && (

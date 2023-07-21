@@ -1,11 +1,10 @@
 import "./CommentBox.scss";
-import profile from "../../assets/profile.png";
 
-const CommentBox = () => {
+const CommentBox = ({ profileImageUrl }) => {
   return (
     <div className="comment-box">
       <div className="image">
-        <img src={profile} alt="user profile pic" />
+        <img src={profileImageUrl} alt="user profile pic" />
       </div>
       <form>
         <input type="text" placeholder="Add a comment" />
