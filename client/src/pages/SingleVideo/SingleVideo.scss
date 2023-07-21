@@ -58,22 +58,7 @@
         }
 
         > .subscribe-btn {
-          background: transparent;
-          outline: none;
-          border: none;
-          background-color: #0f0f0f;
-          color: #fff;
-          padding: 0.7rem 1.5rem;
-          font-weight: 500;
-          font-size: 1.6rem;
-          border-radius: 50px;
           margin-left: 1.5rem;
-          cursor: pointer;
-          transition: all 0.3s;
-
-          &:hover {
-            background-color: hsl(0, 0%, 20%);
-          }
         }
       }
 

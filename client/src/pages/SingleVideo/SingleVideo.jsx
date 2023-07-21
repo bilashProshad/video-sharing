@@ -20,6 +20,7 @@ import api from "../../http";
 import Loading from "../../components/Loading/Loading";
 import formatValue from "../../utils/formatValue";
 import { useAuthContext } from "../../contexts/AuthContext";
+import Button from "../../components/Button/Button";
 
 const SingleVideo = () => {
   const [loading, setLoading] = useState(false);
@@ -165,19 +166,22 @@ const SingleVideo = () => {
                       </Link>
                     </div>
                     {subscribed ? (
-                      <button
-                        className="subscribe-btn"
+                      <Button
+                        variant="round"
+                        className={"subscribe-btn"}
                         onClick={unSubscribeHandler}
                       >
                         Subscribed
-                      </button>
+                      </Button>
                     ) : (
-                      <button
-                        className="subscribe-btn"
+                      <Button
+                        variant="round"
+                        color="dark"
+                        className={"subscribe-btn"}
                         onClick={subscribeHandler}
                       >
                         Subscribe
-                      </button>
+                      </Button>
                     )}
                   </div>
                   <div className="actions">

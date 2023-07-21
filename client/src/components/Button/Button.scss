@@ -93,6 +93,24 @@
     }
   }
 
+  &.round {
+    background-color: #f0f0f0;
+    border-radius: 50px;
+
+    &:hover {
+      background-color: #e4e2e2;
+    }
+  }
+
+  &.round.dark {
+    background-color: #0f0f0f;
+    color: #fff;
+
+    &:hover {
+      background-color: hsl(0, 0%, 20%);
+    }
+  }
+
   &.w-max {
     width: 100%;
   }
