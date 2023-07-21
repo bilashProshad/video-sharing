@@ -5,16 +5,16 @@ import ReactTimeAgo from "react-time-ago";
 const VideoCard = ({
   id,
   title,
-  thumbnail,
   channelName,
   views,
   date,
+  videoUrl,
   verticle = false,
 }) => {
   return (
     <Link to={`/${id}`} className={`video-card ${verticle ? "verticle" : ""}`}>
       <div className="top">
-        <img src={thumbnail} alt={"thumbnail"} />
+        <video muted src={videoUrl} />
       </div>
       <div className="bottom">
         <h3 className="title">{title}</h3>

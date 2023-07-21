@@ -32,6 +32,7 @@ const Recommendation = ({ videos = [] }) => {
             views={video.views}
             date={video.createdAt}
             verticle={windowSize > 950 ? true : false}
+            videoUrl={video.video.url}
           />
         ))}
     </div>

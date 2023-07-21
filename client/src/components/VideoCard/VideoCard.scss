@@ -4,7 +4,7 @@
   > .top {
     overflow: hidden;
     border-radius: 10px;
-    > img {
+    > video {
       width: 100%;
       object-fit: cover;
       border-radius: 10px;
@@ -48,7 +48,7 @@
     display: flex;
     gap: 1rem;
 
-    > .top > img {
+    > .top > video {
       width: 18rem;
       aspect-ratio: 16/9;
       object-fit: cover;
@@ -63,7 +63,7 @@
       display: flex;
       gap: 1rem;
 
-      > .top > img {
+      > .top > video {
         width: 15rem;
         aspect-ratio: 16/9;
         object-fit: cover;

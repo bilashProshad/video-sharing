@@ -16,6 +16,7 @@ const Videos = ({ videos = [] }) => {
             channelName={video.uploader.name}
             views={video.views}
             date={video.createdAt}
+            videoUrl={video.video.url}
           />
         ))}
     </div>
