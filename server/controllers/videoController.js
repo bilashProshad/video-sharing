@@ -102,6 +102,9 @@ export const getVideo = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler(404, "Videos not found!"));
   }
 
+  video.views = video.views + 1;
+  await video.save();
+
   const { token } = req.cookies;
 
   if (!token) {
