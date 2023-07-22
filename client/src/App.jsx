@@ -23,6 +23,7 @@ const App = () => {
         <Route path="/trending" element={<Trending />} />
         <Route path="/discover" element={<Discover />} />
         <Route path="/:id" element={<SingleVideo />} />
+        <Route path="/channel/:id/videos" element={<Channel />} />
 
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<SignIn />} />
@@ -34,7 +35,6 @@ const App = () => {
           <Route path="/upload" element={<Upload />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/channel" element={<MyChannel />} />
-          <Route path="/channel/:id/videos" element={<Channel />} />
           <Route path="/channel/videos/edit/:id" element={<UpdateVideo />} />
         </Route>
       </Routes>

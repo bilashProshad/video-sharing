@@ -9,7 +9,7 @@ import {
 } from "react-icons/ai";
 import { PiShareFatLight } from "react-icons/pi";
 import { CgPlayListAdd } from "react-icons/cg";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import DescriptionAccordian from "../../components/DescriptionAccordian/DescriptionAccordian";
 import Recommendation from "../../components/Recommendation/Recommendation";
 import CommentBox from "../../components/CommentBox/CommentBox";
@@ -32,6 +32,7 @@ const SingleVideo = () => {
   const { id } = useParams();
 
   const { user: currentUser } = useAuthContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -55,6 +56,11 @@ const SingleVideo = () => {
   }, [id]);
 
   const likeHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     try {
       await api.put(`/api/v1/user/like/${id}`);
       setVideo({
@@ -70,6 +76,11 @@ const SingleVideo = () => {
   };
 
   const unlikeHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     try {
       await api.put(`/api/v1/user/unlike/${id}`);
       setVideo({
@@ -85,6 +96,11 @@ const SingleVideo = () => {
   };
 
   const subscribeHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     if (currentUser._id === video.uploader._id) {
       toast.error("You can't subscribe your own channel");
       return;
@@ -106,6 +122,11 @@ const SingleVideo = () => {
   };
 
   const unSubscribeHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
     if (currentUser._id === video.uploader._id) {
       toast.error("You can't unsubscribe your own channel");
       return;

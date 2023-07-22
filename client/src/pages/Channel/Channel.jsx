@@ -9,15 +9,17 @@ import Videos from "../../components/Videos/Videos";
 import formatValue from "../../utils/formatValue";
 import profile from "../../assets/thumbnail-1.png";
 import Button from "../../components/Button/Button";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Channel = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [channel, setChannel] = useState({ subscribers: 0 });
+  const [subscribed, setSubscribed] = useState(false);
 
   const { user: currentUser } = useAuthContext();
-  const navigate = useNavigate();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchVideos() {
@@ -25,6 +27,8 @@ const Channel = () => {
         setLoading(true);
         const { data } = await api.get(`/api/v1/videos/channel/${id}`);
         setVideos(data.videos);
+        setChannel(data.channel);
+        setSubscribed(data.subscribed);
         setLoading(false);
       } catch (error) {
         toast.error(error.response.data.message);
@@ -35,6 +39,52 @@ const Channel = () => {
     fetchVideos();
   }, [id]);
 
+  const subscribeHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    if (currentUser._id === id) {
+      toast.error("You can't subscribe your own channel");
+      return;
+    }
+
+    try {
+      await api.put(`/api/v1/user/sub/${id}`);
+      setSubscribed(true);
+      setChannel({
+        ...channel,
+        subscribers: channel.subscribers + 1,
+      });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const unSubscribeHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    if (currentUser._id === id) {
+      toast.error("You can't unsubscribe your own channel");
+      return;
+    }
+
+    try {
+      await api.put(`/api/v1/user/unsub/${id}`);
+      setSubscribed(false);
+      setChannel({
+        ...channel,
+        subscribers: channel.subscribers - 1,
+      });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <Layout>
       <div className="channel">
@@ -44,20 +94,17 @@ const Channel = () => {
               <div className="image">
                 <img
                   src={
-                    currentUser &&
-                    currentUser.avatar &&
-                    currentUser.avatar.public_id
-                      ? currentUser.avatar.url
+                    channel && channel.avatar && channel.avatar.public_id
+                      ? channel.avatar.url
                       : profile
                   }
-                  alt={currentUser?.name}
+                  alt={channel?.name}
                 />
               </div>
               <div className="body">
-                <h2>{currentUser?.name}</h2>
+                <h2>{channel?.name}</h2>
                 <p>
-                  <span>{formatValue(currentUser.subscribers)}</span>{" "}
-                  subscribers
+                  <span>{formatValue(+channel.subscribers)}</span> subscribers
                 </p>
                 <p>
                   <span>{formatValue(3800)}</span> videos
@@ -65,20 +112,24 @@ const Channel = () => {
               </div>
             </div>
             <div className="buttons">
-              <Button
-                width="w-max"
-                color="light"
-                onClick={() => navigate("/profile")}
-              >
-                Edit Profile
-              </Button>
-              <Button
-                width="w-max"
-                color="light"
-                onClick={() => navigate("/upload")}
-              >
-                Upload Videos
-              </Button>
+              {subscribed ? (
+                <Button
+                  variant="round"
+                  className={"subscribe-btn"}
+                  onClick={unSubscribeHandler}
+                >
+                  Subscribed
+                </Button>
+              ) : (
+                <Button
+                  variant="round"
+                  color="dark"
+                  className={"subscribe-btn"}
+                  onClick={subscribeHandler}
+                >
+                  Subscribe
+                </Button>
+              )}
             </div>
           </div>
         </div>

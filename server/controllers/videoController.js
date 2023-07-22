@@ -190,6 +190,7 @@ export const search = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const channelVideos = catchAsyncErrors(async (req, res, next) => {
+  let subscribed = false;
   const id = req.params.id;
 
   const videos = await Video.find({ uploader: id });
@@ -198,5 +199,21 @@ export const channelVideos = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler(404, "Videos not found"));
   }
 
-  res.status(200).json({ success: true, videos });
+  const channel = await User.findById(id);
+
+  const { token } = req.cookies;
+
+  if (!token) {
+    return res.status(200).json({ success: true, videos, subscribed, channel });
+  }
+
+  const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+
+  const isUserSubscribed = await User.findOne({
+    _id: id,
+    subscribedUsers: decodedData.id,
+  });
+  subscribed = !!isUserSubscribed;
+
+  res.status(200).json({ success: true, videos, subscribed, channel });
 });
