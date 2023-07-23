@@ -1,16 +1,19 @@
 import Comment from "../Comment/Comment";
 import "./Comments.scss";
 
-const Comments = () => {
+const Comments = ({ comments = [] }) => {
   return (
     <div className="comments">
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
+      {comments.length > 0 &&
+        comments.map((comment) => (
+          <Comment
+            key={comment._id}
+            name={comment?.author?.name}
+            profileUrl={comment?.author?.avatar?.url}
+            comment={comment?.comment}
+            date={comment?.createdAt}
+          />
+        ))}
     </div>
   );
 };

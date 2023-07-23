@@ -93,10 +93,14 @@ export const getVideo = catchAsyncErrors(async (req, res, next) => {
   let disliked = false;
   let subscribed = false;
 
-  const video = await Video.findById(req.params.id).populate(
-    "uploader",
-    "name email avatar subscribers"
-  );
+  let video = await Video.findById(req.params.id)
+    .populate("uploader", "name email avatar subscribers")
+    .populate("comments");
+
+  video = await User.populate(video, {
+    path: "comments.author",
+    select: "name email avatar",
+  });
 
   if (!video) {
     return next(new ErrorHandler(404, "Videos not found!"));

@@ -1,5 +1,6 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncErrors.js";
 import { Comment } from "../models/Comment.js";
+import { User } from "../models/User.js";
 import { Video } from "../models/Video.js";
 import { ErrorHandler } from "../utils/ErrorHandler.js";
 
@@ -13,17 +14,21 @@ export const addComment = catchAsyncErrors(async (req, res, next) => {
     next(new ErrorHandler(404, "Video not found"));
   }
 
-  // const newComment = new Comment({comment, author: req.user._id, video: id})
-  const newComment = await Comment.create({
+  let newComment = await Comment.create({
     comment,
     author: req.user._id,
     video: id,
   });
 
+  newComment = await User.populate(newComment, {
+    path: "author",
+    select: "name email avatar",
+  });
+
   video.comments.push(newComment._id);
   await video.save();
 
-  res.status(201).json({ success: true, comment: newComment, video });
+  res.status(201).json({ success: true, comment: newComment });
 });
 
 export const getComments = catchAsyncErrors(async (req, res, next) => {

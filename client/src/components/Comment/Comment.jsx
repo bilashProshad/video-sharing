@@ -1,22 +1,20 @@
+import ReactTimeAgo from "react-time-ago";
 import "./Comment.scss";
-import profile from "../../assets/profile.png";
 
-const Comment = () => {
+const Comment = ({ name, comment, profileUrl, date = Date.now() }) => {
   return (
     <div className="comment">
       <div className="avatar">
-        <img src={profile} alt="Profile" />
+        <img src={profileUrl} alt={name} />
       </div>
       <div className="body">
         <div className="top">
-          <h4>Bilash Prosad</h4>
-          <small>1 hour ago</small>
+          <h4>{name}</h4>
+          <small>
+            <ReactTimeAgo date={new Date(date).getTime()} locale="en-US" />{" "}
+          </small>
         </div>
-        <p className="content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita ex
-          aliquam vel nobis temporibus, nulla voluptatibus quam sit quidem sed.
-          Distinctio, maiores.
-        </p>
+        <p className="content">{comment}</p>
       </div>
     </div>
   );
