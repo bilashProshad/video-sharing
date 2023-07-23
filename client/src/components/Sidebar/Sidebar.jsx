@@ -77,7 +77,7 @@ const Sidebar = ({ expand = true }) => {
           <div />
         </div>
 
-        <ul className={`bottom ${expand ? "" : "hide"}`}>
+        {/* <ul className={`bottom ${expand ? "" : "hide"}`}>
           <li>
             <span className="list-header">Subscriptions</span>
           </li>
@@ -101,7 +101,7 @@ const Sidebar = ({ expand = true }) => {
               <img src={avatar} alt="channel" /> <span>Tech Smash</span>
             </Link>
           </li>
-        </ul>
+        </ul> */}
       </aside>
       {/* ==================================================== */}
     </>

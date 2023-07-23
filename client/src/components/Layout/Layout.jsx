@@ -25,7 +25,7 @@ const Layout = ({
         {showSidebar && <Sidebar expand={expandSidebar} />}
 
         <SidebarSlider
-          expand={expandSidebar}
+          expand={!expandSidebar}
           onClose={expandSidebarHandler}
           showLargeScreen={showSidebarSlider}
         />

@@ -112,7 +112,7 @@ const SidebarSlider = ({ expand, onClose, showLargeScreen = false }) => {
           <div />
         </div>
 
-        <ul className="bottom">
+        {/* <ul className="bottom">
           <li>
             <span className="list-header">Subscriptions</span>
           </li>
@@ -136,7 +136,7 @@ const SidebarSlider = ({ expand, onClose, showLargeScreen = false }) => {
               <img src={avatar} alt="channel" /> <span>Tech Smash</span>
             </Link>
           </li>
-        </ul>
+        </ul> */}
       </aside>
     </>
   );

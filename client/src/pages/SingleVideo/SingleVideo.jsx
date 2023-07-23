@@ -30,6 +30,7 @@ const SingleVideo = () => {
   const [disLiked, setDisLiked] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
   const [commentLoading, setCommentLoading] = useState(false);
   const { id } = useParams();
 
@@ -46,6 +47,7 @@ const SingleVideo = () => {
         setSubscribed(data.subscribed);
         const { data: similarVideos } = await api.get(`/api/v1/videos/random`);
         setVideo(data.video);
+        setComments(data.video.comments);
         setVideos(similarVideos.videos);
         setLoading(false);
       } catch (error) {
@@ -161,6 +163,7 @@ const SingleVideo = () => {
       const { data } = await api.post(`/api/v1/videos/${id}/comments`, {
         comment,
       });
+      setComments([data.comment, ...comments]);
       setComment("");
       setCommentLoading(false);
     } catch (error) {
@@ -252,7 +255,7 @@ const SingleVideo = () => {
                   <DescriptionAccordian description={video?.description} />
                 </div>
                 <div className="all-comments">
-                  <h3>247 Comments</h3>
+                  <h3>Comments</h3>
                   <CommentBox
                     profileImageUrl={
                       currentUser &&
@@ -266,7 +269,7 @@ const SingleVideo = () => {
                     loading={commentLoading}
                     onSubmit={commentHandler}
                   />
-                  <Comments />
+                  <Comments comments={comments} />
                 </div>
               </div>
               <Recommendation videos={videos} />
