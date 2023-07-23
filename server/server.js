@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser";
 import { videoRoutes } from "./routes/videoRoutes.js";
 import morgan from "morgan";
 import cors from "cors";
+import { commentRoutes } from "./routes/commentRoutes.js";
 
 const app = express();
 dotenv.config();
@@ -37,6 +38,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/videos", videoRoutes);
+app.use("/api/v1/videos", commentRoutes);
 
 app.use(errorMiddleware);
 

@@ -29,6 +29,8 @@ const SingleVideo = () => {
   const [liked, setLiked] = useState(false);
   const [disLiked, setDisLiked] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [comment, setComment] = useState("");
+  const [commentLoading, setCommentLoading] = useState(false);
   const { id } = useParams();
 
   const { user: currentUser } = useAuthContext();
@@ -147,6 +149,26 @@ const SingleVideo = () => {
     }
   };
 
+  const commentHandler = async (e) => {
+    e.preventDefault();
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      setCommentLoading(true);
+      const { data } = await api.post(`/api/v1/videos/${id}/comments`, {
+        comment,
+      });
+      setComment("");
+      setCommentLoading(false);
+    } catch (error) {
+      toast.error(error.response.data.message);
+      setCommentLoading(false);
+    }
+  };
+
   return (
     <Layout showSidebar={false} showSidebarSlider={true} expand={false}>
       {loading ? (
@@ -239,6 +261,10 @@ const SingleVideo = () => {
                         ? currentUser.avatar.url
                         : profile
                     }
+                    value={comment}
+                    setValue={setComment}
+                    loading={commentLoading}
+                    onSubmit={commentHandler}
                   />
                   <Comments />
                 </div>
