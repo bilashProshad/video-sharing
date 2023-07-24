@@ -74,11 +74,10 @@ export const deleteVideo = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler(404, "Video not found!"));
   }
 
-  if (req.user._id !== video.uploader) {
+  if (!req.user._id.equals(video.uploader)) {
     return next(new ErrorHandler(403, "You can delete only your video!"));
   }
 
-  await cloudinary.v2.uploader.destroy(video.thumbnail.public_id);
   await cloudinary.v2.uploader.destroy(video.video.public_id);
 
   await Video.findByIdAndDelete(req.params.id);

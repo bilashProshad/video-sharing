@@ -2,38 +2,43 @@
   overflow: hidden;
   position: relative;
 
-  > .edit-btn {
+  > .edit-btns {
     position: absolute;
     top: 1rem;
     right: 1rem;
     display: inline-flex;
-    // align-items: center;
     gap: 0.5rem;
-    justify-content: center;
-    background: transparent;
-    border: none;
-    background-color: rgb(0, 0, 0, 0.3);
-    font-size: 1.6rem;
-    color: #fff;
-    font-weight: 500;
-    padding: 0.5rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
 
-    > svg {
-      stroke-width: 3px;
-    }
+    > .edit-btn {
+      display: inline-flex;
+      // align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      background-color: rgb(0, 0, 0, 0.3);
+      font-size: 1.6rem;
+      color: #fff;
+      font-weight: 500;
+      padding: 0.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
 
-    &:hover {
-      background-color: rgb(0, 0, 0, 0.5);
+      > svg {
+        stroke-width: 3px;
+      }
+
+      &:hover {
+        background-color: rgb(0, 0, 0, 0.5);
+      }
     }
   }
 
   > .top {
     overflow: hidden;
     border-radius: 10px;
-    > img {
+    > video {
       width: 100%;
       object-fit: cover;
       border-radius: 10px;

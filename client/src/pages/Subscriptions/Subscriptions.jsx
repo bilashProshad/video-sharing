@@ -26,10 +26,6 @@ const Subscriptions = () => {
     fetchVideos();
   }, []);
 
-  useEffect(() => {
-    console.log(videos);
-  }, [videos]);
-
   return (
     <Layout>
       <div className="subscriptions">

@@ -1,6 +1,5 @@
 import ChannelVideoCard from "../ChannelVideoCard/ChannelVideoCard";
 import "./ChannelVideos.scss";
-import thumbnail1 from "../../assets/thumbnail-1.png";
 
 const ChannelVideos = ({ videos = [] }) => {
   return (
@@ -11,10 +10,10 @@ const ChannelVideos = ({ videos = [] }) => {
             key={video._id}
             id={video._id}
             title={video.title}
-            thumbnail={thumbnail1}
             channelName={video.uploader.name}
             views={video.views}
             date={video.createdAt}
+            videoUrl={video.video.url}
           />
         ))}
     </div>
