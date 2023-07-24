@@ -167,10 +167,10 @@ export const subscribed = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user._id);
 
   const videos = await Video.find({
-    uploader: { $in: user.subscribedUsers },
+    uploader: { $in: user.subscribedChannels },
   })
-    .populate("uploader")
-    .sort((a, b) => b.createdAt - a.createdAt);
+    .populate("uploader", "name email avatar")
+    .sort({ createdAt: -1 });
 
   res.status(200).json({ success: true, videos });
 });

@@ -40,6 +40,12 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    subscribedChannels: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     resetPasswordToken: String,
     resetPasswordExpire: Date,
   },

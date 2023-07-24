@@ -43,15 +43,23 @@
   }
 
   &.verticle {
-    // max-width: 40rem;
+    max-width: 40rem;
     width: 100%;
     display: flex;
-    gap: 1rem;
+    // gap: 1rem;
+    margin-left: 2rem;
 
-    > .top > video {
-      width: 18rem;
-      aspect-ratio: 16/9;
-      object-fit: cover;
+    > .top {
+      flex: 1;
+      > video {
+        width: 18rem;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+      }
+    }
+
+    > .bottom {
+      flex: 1;
     }
   }
 }

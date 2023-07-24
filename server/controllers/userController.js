@@ -137,9 +137,12 @@ export const subscribe = catchAsyncErrors(async (req, res, next) => {
 
   await User.findByIdAndUpdate(req.params.id, {
     $push: { subscribedUsers: req.user._id },
+    $inc: { subscribers: 1 },
   });
 
-  await User.findByIdAndUpdate(req.params.id, { $inc: { subscribers: 1 } });
+  await User.findByIdAndUpdate(req.user._id, {
+    $push: { subscribedChannels: req.params.id },
+  });
 
   res.status(200).json({ success: true, message: "Subscription successfull" });
 });
@@ -153,9 +156,12 @@ export const unsubscribe = catchAsyncErrors(async (req, res, next) => {
 
   await User.findByIdAndUpdate(req.params.id, {
     $pull: { subscribedUsers: req.user._id },
+    $inc: { subscribers: -1 },
   });
 
-  await User.findByIdAndUpdate(req.params.id, { $inc: { subscribers: -1 } });
+  await User.findByIdAndUpdate(req.user._id, {
+    $pull: { subscribedChannels: req.params.id },
+  });
 
   res
     .status(200)

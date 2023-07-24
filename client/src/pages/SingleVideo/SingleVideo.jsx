@@ -45,6 +45,10 @@ const SingleVideo = () => {
         setLiked(data.liked);
         setDisLiked(data.disliked);
         setSubscribed(data.subscribed);
+        // const tags = data.video.tags.join(",");
+        // const { data: similarVideos } = await api.get(
+        //   `/api/v1/videos/tags?tags=${tags}`
+        // );
         const { data: similarVideos } = await api.get(`/api/v1/videos/random`);
         setVideo(data.video);
         setComments(data.video.comments);
@@ -173,7 +177,7 @@ const SingleVideo = () => {
   };
 
   return (
-    <Layout showSidebar={false} showSidebarSlider={true} expand={false}>
+    <Layout showSidebar={false} showSidebarSlider={true} expand={true}>
       {loading ? (
         <Loading />
       ) : (
