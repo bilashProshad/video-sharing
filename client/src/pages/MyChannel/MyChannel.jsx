@@ -71,14 +71,14 @@ const MyChannel = () => {
                 color="light"
                 onClick={() => navigate("/profile")}
               >
-                Edit Profile
+                <span>Edit</span> Profile
               </Button>
               <Button
                 width="w-max"
                 color="light"
                 onClick={() => navigate("/upload")}
               >
-                Upload Videos
+                Upload <span>Videos</span>
               </Button>
             </div>
           </div>

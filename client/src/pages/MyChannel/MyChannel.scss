@@ -32,6 +32,7 @@
         .body {
           h2 {
             margin-bottom: 1rem;
+            max-width: 20rem;
           }
 
           p > span {
@@ -67,6 +68,58 @@
       > .image {
         width: 100px;
         height: 100px;
+      }
+
+      > .body > h2 {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .my-channel {
+    padding: 1rem;
+
+    > .channel-container > {
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+
+        > .info {
+          display: flex;
+          flex-direction: column;
+
+          > .image {
+            width: 150px;
+            height: 150px;
+          }
+
+          > .body {
+            > h2 {
+              max-width: initial;
+              text-align: center;
+            }
+
+            > p {
+              text-align: center;
+            }
+          }
+        }
+
+        > .buttons {
+          flex-direction: row;
+          width: 80%;
+          margin-left: auto;
+          margin-right: auto;
+          gap: 1rem;
+          margin-top: 1.5rem;
+
+          // > button {
+          //   flex: 1;
+          //   width: 100%;
+          // }
+        }
       }
     }
   }

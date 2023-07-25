@@ -48,7 +48,7 @@ const ChannelVideoCard = ({
         <div className="body">
           <p>{channelName}</p>
           <p>
-            <span>{views}</span> -{" "}
+            <span>{views} views</span> -{" "}
             <span>
               <ReactTimeAgo date={new Date(date).getTime()} locale="en-US" />
             </span>

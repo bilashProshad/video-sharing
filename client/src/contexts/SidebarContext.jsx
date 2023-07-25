@@ -10,7 +10,7 @@ const useSidebarContext = () => {
 };
 
 const SidebarProvider = ({ children }) => {
-  const [activeLink, setActiveLink] = useState("home");
+  const [activeLink, setActiveLink] = useState("");
 
   const value = {
     activeLink,

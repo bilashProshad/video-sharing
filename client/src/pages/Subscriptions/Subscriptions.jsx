@@ -5,12 +5,18 @@ import toast from "react-hot-toast";
 import "./Subscriptions.scss";
 import api from "../../http";
 import Loading from "../../components/Loading/Loading";
+import NotFoundVideos from "../../components/NotFoundVideos/NotFoundVideos";
+import { useSidebarContext } from "../../contexts/SidebarContext";
 
 const Subscriptions = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const { setActiveLink } = useSidebarContext();
+
   useEffect(() => {
+    setActiveLink("subscriptions");
+
     const fetchVideos = async () => {
       try {
         setLoading(true);
@@ -24,7 +30,7 @@ const Subscriptions = () => {
     };
 
     fetchVideos();
-  }, []);
+  }, [setActiveLink]);
 
   return (
     <Layout>
@@ -36,6 +42,8 @@ const Subscriptions = () => {
         ) : (
           <Videos videos={videos} />
         )}
+
+        {!loading && videos.length <= 0 && <NotFoundVideos />}
       </div>
     </Layout>
   );
