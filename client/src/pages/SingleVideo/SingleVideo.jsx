@@ -47,6 +47,7 @@ const SingleVideo = () => {
         setLiked(data.liked);
         setDisLiked(data.disliked);
         setSubscribed(data.subscribed);
+        setSaved(data.saved);
         // const tags = data.video.tags.join(",");
         // const { data: similarVideos } = await api.get(
         //   `/api/v1/videos/tags?tags=${tags}`

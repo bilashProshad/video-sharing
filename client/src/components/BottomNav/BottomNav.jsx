@@ -6,7 +6,10 @@ import {
   AiOutlineHeart,
 } from "react-icons/ai";
 import { BiTrendingUp } from "react-icons/bi";
-import { MdOutlineSubscriptions, MdOutlineWatchLater } from "react-icons/md";
+import {
+  MdOutlineSubscriptions,
+  MdOutlinePlaylistAddCheck,
+} from "react-icons/md";
 import { useSidebarContext } from "../../contexts/SidebarContext";
 
 const BottomNav = () => {
@@ -53,12 +56,20 @@ const BottomNav = () => {
           </Link>
         </li>
         <li>
-          <Link to={`/`}>
-            <MdOutlineWatchLater /> <span>Watch Later</span>
+          <Link
+            to={`/saved`}
+            className={activeLink === "saved" ? "active" : ""}
+            onClick={() => setActiveLink("saved")}
+          >
+            <MdOutlinePlaylistAddCheck /> <span>Watch Later</span>
           </Link>
         </li>
         <li>
-          <Link to={`/`}>
+          <Link
+            to={`/liked`}
+            className={activeLink === "liked" ? "active" : ""}
+            onClick={() => setActiveLink("liked")}
+          >
             <AiOutlineHeart /> <span>Liked Videos</span>
           </Link>
         </li>

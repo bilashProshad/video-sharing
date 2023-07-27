@@ -4,7 +4,9 @@ import {
   channelVideos,
   deleteVideo,
   getVideo,
+  likedVideos,
   randomVideos,
+  savedVideos,
   search,
   subscribed,
   trendingVideos,
@@ -24,6 +26,8 @@ router
 router.route("/trend").get(trendingVideos);
 router.route("/random").get(randomVideos);
 router.route("/subscribed").get(isAuthenticatedUser, subscribed);
+router.route("/liked").get(isAuthenticatedUser, likedVideos);
+router.route("/saved").get(isAuthenticatedUser, savedVideos);
 router.route("/tags").get(videosByTag);
 router.route("/search").get(search);
 router.route("/channel/:id").get(channelVideos);

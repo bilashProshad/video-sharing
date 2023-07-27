@@ -6,8 +6,10 @@ import {
   AiOutlineHeart,
 } from "react-icons/ai";
 import { BiTrendingUp } from "react-icons/bi";
-import { MdOutlineSubscriptions, MdOutlineWatchLater } from "react-icons/md";
-import avatar from "../../assets/profile.png";
+import {
+  MdOutlineSubscriptions,
+  MdOutlinePlaylistAddCheck,
+} from "react-icons/md";
 import { useSidebarContext } from "../../contexts/SidebarContext";
 
 const Sidebar = ({ expand = true }) => {
@@ -62,12 +64,20 @@ const Sidebar = ({ expand = true }) => {
 
         <ul className={expand ? "" : "hide-text"}>
           <li>
-            <Link to={`/`}>
-              <MdOutlineWatchLater /> <span>Watch Later</span>
+            <Link
+              to={`/saved`}
+              className={activeLink === "saved" ? "active" : ""}
+              onClick={() => setActiveLink("saved")}
+            >
+              <MdOutlinePlaylistAddCheck /> <span>Saved Videos</span>
             </Link>
           </li>
           <li>
-            <Link to={`/`}>
+            <Link
+              to={`/liked`}
+              className={activeLink === "liked" ? "active" : ""}
+              onClick={() => setActiveLink("liked")}
+            >
               <AiOutlineHeart /> <span>Liked Videos</span>
             </Link>
           </li>

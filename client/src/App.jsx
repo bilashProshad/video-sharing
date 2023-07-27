@@ -14,6 +14,8 @@ import { Toaster } from "react-hot-toast";
 import MyChannel from "./pages/MyChannel/MyChannel";
 import UpdateVideo from "./pages/UpdateVideo/UpdateVideo";
 import Channel from "./pages/Channel/Channel";
+import LikedVideos from "./pages/LikedVideos/LikedVideos";
+import SavedVideos from "./pages/SavedVideos/SavedVideos";
 
 const App = () => {
   return (
@@ -32,6 +34,8 @@ const App = () => {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/subscriptions" element={<Subscriptions />} />
+          <Route path="/liked" element={<LikedVideos />} />
+          <Route path="/saved" element={<SavedVideos />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/channel" element={<MyChannel />} />

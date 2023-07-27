@@ -6,8 +6,10 @@ import {
   AiOutlineHeart,
 } from "react-icons/ai";
 import { BiTrendingUp } from "react-icons/bi";
-import { MdOutlineSubscriptions, MdOutlineWatchLater } from "react-icons/md";
-import avatar from "../../assets/profile.png";
+import {
+  MdOutlineSubscriptions,
+  MdOutlinePlaylistAddCheck,
+} from "react-icons/md";
 import { createPortal } from "react-dom";
 import Backdrop from "../Backdrop/Backdrop";
 import { useEffect, useState } from "react";
@@ -97,12 +99,20 @@ const SidebarSlider = ({ expand, onClose, showLargeScreen = false }) => {
 
         <ul>
           <li>
-            <Link to={`/`}>
-              <MdOutlineWatchLater /> <span>Watch Later</span>
+            <Link
+              to={`/saved`}
+              className={activeLink === "saved" ? "active" : ""}
+              onClick={() => setActiveLink("saved")}
+            >
+              <MdOutlinePlaylistAddCheck /> <span>Saved Videos</span>
             </Link>
           </li>
           <li>
-            <Link to={`/`}>
+            <Link
+              to={`/liked`}
+              className={activeLink === "liked" ? "active" : ""}
+              onClick={() => setActiveLink("liked")}
+            >
               <AiOutlineHeart /> <span>Liked Videos</span>
             </Link>
           </li>

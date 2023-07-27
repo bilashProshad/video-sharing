@@ -14,6 +14,7 @@ import ChannelVideos from "../../components/ChannelVideos/ChannelVideos";
 const MyChannel = () => {
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [totalVideos, setTotalVideos] = useState(0);
 
   const { user: currentUser } = useAuthContext();
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const MyChannel = () => {
           `/api/v1/videos/channel/${currentUser._id}`
         );
         setVideos(data.videos);
+        setTotalVideos(data.totalVideos);
         setLoading(false);
       } catch (error) {
         toast.error(error.response.data.message);
@@ -61,7 +63,7 @@ const MyChannel = () => {
                   subscribers
                 </p>
                 <p>
-                  <span>{formatValue(3800)}</span> videos
+                  <span>{formatValue(+totalVideos)}</span> videos
                 </p>
               </div>
             </div>

@@ -91,6 +91,7 @@ export const getVideo = catchAsyncErrors(async (req, res, next) => {
   let liked = false;
   let disliked = false;
   let subscribed = false;
+  let saved = false;
 
   let video = await Video.findById(req.params.id)
     .populate("uploader", "name email avatar subscribers")
@@ -113,7 +114,7 @@ export const getVideo = catchAsyncErrors(async (req, res, next) => {
   if (!token) {
     return res
       .status(200)
-      .json({ success: true, video, liked, disliked, subscribed });
+      .json({ success: true, video, liked, disliked, subscribed, saved });
   }
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
@@ -122,7 +123,17 @@ export const getVideo = catchAsyncErrors(async (req, res, next) => {
     _id: video.uploader._id,
     subscribedUsers: decodedData.id,
   });
+
   subscribed = !!isUserSubscribed;
+
+  const user = await User.findById(decodedData.id).select("+savedVideos");
+
+  const savedVideos = user.savedVideos.map((video) => video.toString());
+  if (savedVideos.includes(req.params.id)) {
+    saved = true;
+  } else {
+    saved = false;
+  }
 
   const isUserLiked = await Video.findOne({
     _id: req.params.id,
@@ -136,7 +147,9 @@ export const getVideo = catchAsyncErrors(async (req, res, next) => {
   });
   disliked = !!isUserDisliked;
 
-  res.status(200).json({ success: true, video, liked, disliked, subscribed });
+  res
+    .status(200)
+    .json({ success: true, video, liked, disliked, subscribed, saved });
 });
 
 export const trendingVideos = catchAsyncErrors(async (req, res, next) => {
@@ -196,7 +209,8 @@ export const channelVideos = catchAsyncErrors(async (req, res, next) => {
   let subscribed = false;
   const id = req.params.id;
 
-  const videos = await Video.find({ uploader: id });
+  const videos = await Video.find({ uploader: id }).sort({ createdAt: -1 });
+  const totalVideos = await Video.countDocuments({ uploader: id });
 
   if (!videos) {
     return next(new ErrorHandler(404, "Videos not found"));
@@ -207,7 +221,9 @@ export const channelVideos = catchAsyncErrors(async (req, res, next) => {
   const { token } = req.cookies;
 
   if (!token) {
-    return res.status(200).json({ success: true, videos, subscribed, channel });
+    return res
+      .status(200)
+      .json({ success: true, videos, subscribed, channel, totalVideos });
   }
 
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
@@ -218,5 +234,27 @@ export const channelVideos = catchAsyncErrors(async (req, res, next) => {
   });
   subscribed = !!isUserSubscribed;
 
-  res.status(200).json({ success: true, videos, subscribed, channel });
+  res
+    .status(200)
+    .json({ success: true, videos, subscribed, channel, totalVideos });
+});
+
+export const likedVideos = catchAsyncErrors(async (req, res, next) => {
+  const videos = await Video.find({ likes: req.user._id })
+    .populate("uploader", "name email avatar")
+    .sort({ createdAt: -1 });
+
+  if (!videos) {
+    return next(new ErrorHandler(404, "Videos not found"));
+  }
+  res.status(200).json({ success: true, videos });
+});
+
+export const savedVideos = catchAsyncErrors(async (req, res, next) => {
+  let user = await User.findById(req.user._id).populate({
+    path: "savedVideos",
+    populate: { path: "uploader", select: "name email avatar" },
+  });
+
+  res.status(200).json({ success: true, videos: user.savedVideos });
 });

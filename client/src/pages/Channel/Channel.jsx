@@ -16,6 +16,7 @@ const Channel = () => {
   const [loading, setLoading] = useState(false);
   const [channel, setChannel] = useState({ subscribers: 0 });
   const [subscribed, setSubscribed] = useState(false);
+  const [totalVideos, setTotalVideos] = useState(0);
 
   const { user: currentUser } = useAuthContext();
   const { id } = useParams();
@@ -29,6 +30,7 @@ const Channel = () => {
         setVideos(data.videos);
         setChannel(data.channel);
         setSubscribed(data.subscribed);
+        setTotalVideos(data.totalVideos);
         setLoading(false);
       } catch (error) {
         toast.error(error.response.data.message);
@@ -107,7 +109,7 @@ const Channel = () => {
                   <span>{formatValue(+channel.subscribers)}</span> subscribers
                 </p>
                 <p>
-                  <span>{formatValue(3800)}</span> videos
+                  <span>{formatValue(+totalVideos)}</span> videos
                 </p>
               </div>
             </div>
