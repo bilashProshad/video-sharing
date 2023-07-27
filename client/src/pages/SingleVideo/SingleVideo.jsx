@@ -9,6 +9,7 @@ import {
 } from "react-icons/ai";
 import { PiShareFatLight } from "react-icons/pi";
 import { CgPlayListAdd } from "react-icons/cg";
+import { MdOutlinePlaylistAddCheck } from "react-icons/md";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import DescriptionAccordian from "../../components/DescriptionAccordian/DescriptionAccordian";
 import Recommendation from "../../components/Recommendation/Recommendation";
@@ -29,6 +30,7 @@ const SingleVideo = () => {
   const [liked, setLiked] = useState(false);
   const [disLiked, setDisLiked] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [saved, setSaved] = useState(false);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [commentLoading, setCommentLoading] = useState(false);
@@ -176,6 +178,34 @@ const SingleVideo = () => {
     }
   };
 
+  const saveHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await api.put(`/api/v1/user/save/${id}`);
+      setSaved(true);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const unSaveHandler = async () => {
+    if (!currentUser) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      await api.put(`/api/v1/user/unsave/${id}`);
+      setSaved(false);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
   return (
     <Layout showSidebar={false} showSidebarSlider={true} expand={true}>
       {loading ? (
@@ -249,10 +279,17 @@ const SingleVideo = () => {
                       <PiShareFatLight />
                       <span>Share</span>
                     </button>
-                    <button>
-                      <CgPlayListAdd />
-                      <span>Save</span>
-                    </button>
+                    {saved ? (
+                      <button onClick={unSaveHandler}>
+                        <MdOutlinePlaylistAddCheck />
+                        <span>Saved</span>
+                      </button>
+                    ) : (
+                      <button onClick={saveHandler}>
+                        <CgPlayListAdd />
+                        <span>Save</span>
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div className="description">

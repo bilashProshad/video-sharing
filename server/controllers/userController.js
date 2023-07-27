@@ -191,3 +191,29 @@ export const unlike = catchAsyncErrors(async (req, res, next) => {
     .status(200)
     .json({ success: true, message: "The video has been disliked." });
 });
+
+export const save = catchAsyncErrors(async (req, res, next) => {
+  const videoId = req.params.id;
+
+  await User.findByIdAndUpdate(req.user._id, {
+    $addToSet: { savedVideos: videoId },
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Video saved successfully",
+  });
+});
+
+export const unsave = catchAsyncErrors(async (req, res, next) => {
+  const videoId = req.params.id;
+
+  await User.findByIdAndUpdate(req.user._id, {
+    $pull: { savedVideos: videoId },
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Video removed successfully",
+  });
+});

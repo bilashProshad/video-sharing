@@ -6,8 +6,10 @@ import {
   login,
   logout,
   register,
+  save,
   subscribe,
   unlike,
+  unsave,
   unsubscribe,
   updateAvatar,
   updateProfile,
@@ -42,5 +44,7 @@ router.route("/sub/:id").put(isAuthenticatedUser, subscribe);
 router.route("/unsub/:id").put(isAuthenticatedUser, unsubscribe);
 router.route("/like/:id").put(isAuthenticatedUser, like);
 router.route("/unlike/:id").put(isAuthenticatedUser, unlike);
+router.route("/save/:id").put(isAuthenticatedUser, save);
+router.route("/unsave/:id").put(isAuthenticatedUser, unsave);
 
 export const userRoutes = router;

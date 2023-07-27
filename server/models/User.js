@@ -46,8 +46,9 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
+    savedVideos: [
+      { type: mongoose.Schema.Types.ObjectId, ref: "Video", select: false },
+    ],
   },
   {
     timestamps: true,
