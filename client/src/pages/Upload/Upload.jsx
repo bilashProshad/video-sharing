@@ -110,7 +110,7 @@ const Upload = () => {
       setLoading(true);
       const { data } = await api.post(`/api/v1/videos`, myForm, config);
       setLoading(false);
-      navigate(`/${data.video._id}`);
+      navigate(`/video/${data.video._id}`);
     } catch (error) {
       toast.error("Video upload has been failed");
       toast.error(error.response.data.message);
