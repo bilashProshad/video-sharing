@@ -8,6 +8,7 @@ import { videoRoutes } from "./routes/videoRoutes.js";
 import morgan from "morgan";
 import cors from "cors";
 import { commentRoutes } from "./routes/commentRoutes.js";
+import { ErrorHandler } from "./utils/ErrorHandler.js";
 
 const app = express();
 dotenv.config();
@@ -40,10 +41,14 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/videos", videoRoutes);
 app.use("/api/v1/videos", commentRoutes);
 
+app.all("*", (req, res, next) => {
+  next(new ErrorHandler(404, "not found"));
+});
+
 app.use(errorMiddleware);
 
 const server = app.listen(process.env.PORT, () => {
-  console.log("Listening on port 4000");
+  console.log("Listening on port " + process.env.PORT);
 });
 
 // Unhandled Promise Rejection
