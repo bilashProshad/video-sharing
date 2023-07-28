@@ -74,7 +74,7 @@ const SignIn = () => {
     <div className="signin">
       <div className="form-container">
         <div className="top">
-          <img src={logo} alt="VidVibes Logo" />
+          <img src={logo} alt="VidVibes Logo" onClick={() => navigate("/")} />
           <h2>Login</h2>
           <p>to continue to VidVibes</p>
         </div>

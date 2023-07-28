@@ -17,6 +17,7 @@ import Channel from "./pages/Channel/Channel";
 import LikedVideos from "./pages/LikedVideos/LikedVideos";
 import SavedVideos from "./pages/SavedVideos/SavedVideos";
 import Search from "./pages/Search/Search";
+import NotFound from "./pages/NotFound/NotFound";
 
 const App = () => {
   return (
@@ -26,7 +27,7 @@ const App = () => {
         <Route path="/trending" element={<Trending />} />
         <Route path="/discover" element={<Discover />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/:id" element={<SingleVideo />} />
+        <Route path="/video/:id" element={<SingleVideo />} />
         <Route path="/channel/:id/videos" element={<Channel />} />
 
         <Route element={<PublicRoute />}>
@@ -43,6 +44,8 @@ const App = () => {
           <Route path="/channel" element={<MyChannel />} />
           <Route path="/channel/videos/edit/:id" element={<UpdateVideo />} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       <Toaster />

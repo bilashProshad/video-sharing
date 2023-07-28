@@ -12,7 +12,10 @@ const VideoCard = ({
   verticle = false,
 }) => {
   return (
-    <Link to={`/${id}`} className={`video-card ${verticle ? "verticle" : ""}`}>
+    <Link
+      to={`/video/${id}`}
+      className={`video-card ${verticle ? "verticle" : ""}`}
+    >
       <div className="top">
         <video muted src={videoUrl} />
       </div>

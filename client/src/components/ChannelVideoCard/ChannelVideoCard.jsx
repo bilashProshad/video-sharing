@@ -37,7 +37,7 @@ const ChannelVideoCard = ({
 
   return (
     <Link
-      to={`/${id}`}
+      to={`/video/${id}`}
       className={`channel-video-card ${verticle ? "verticle" : ""}`}
     >
       <div className="top">
