@@ -10,9 +10,11 @@ import { HiOutlineUpload } from "react-icons/hi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthContext";
+import InputSearchSM from "../NavComponents/InputSearchSM/InputSearchSM";
 
 const Navbar = ({ onExpandSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [showSearchInput, setShowSearchInput] = useState(false);
 
   const { user } = useAuthContext();
 
@@ -42,11 +44,18 @@ const Navbar = ({ onExpandSidebar }) => {
       </div>
 
       <InputSearch />
+      <InputSearchSM
+        showInput={showSearchInput}
+        setShowInput={setShowSearchInput}
+      />
 
       <div className="items">
         <ul className="lists">
           <li>
-            <ButtonNav className="button-search">
+            <ButtonNav
+              className="button-search"
+              onClick={() => setShowSearchInput(!showSearchInput)}
+            >
               <AiOutlineSearch /> <span>Search</span>
             </ButtonNav>
           </li>

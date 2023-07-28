@@ -6,12 +6,35 @@
   align-items: center;
   gap: 2rem;
   border-radius: 5px;
+  position: relative;
+  overflow: hidden;
 
   > input {
     border: none;
     background: transparent;
     outline: none;
     width: 30rem;
+  }
+
+  > button {
+    position: absolute;
+    right: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transform: translateY(0.2rem);
+    color: #777;
+    padding: 1.5rem 1.2rem;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: hsl(0, 0%, 83%);
+    }
+
+    > svg {
+      transform: scale(1.3);
+    }
   }
 }
 

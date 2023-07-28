@@ -1,0 +1,56 @@
+.input-search-sm {
+  display: none;
+  background-color: #eee;
+  color: #777;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  overflow: hidden;
+  transform: translateY(-150%);
+  transition: all 0.4s;
+
+  > input {
+    padding: 3rem 1.5rem;
+
+    flex: 1;
+    border: none;
+    outline: none;
+  }
+
+  > button {
+    position: absolute;
+    right: 0;
+    padding: 3.5rem 2rem;
+    transform: translateY(0.2rem);
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: #777;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: hsl(0, 0%, 83%);
+    }
+
+    > svg {
+      transform: scale(1.7);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .input-search-sm {
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    transition: all 0.4s;
+
+    &.show {
+      transform: translateY(0);
+    }
+  }
+}

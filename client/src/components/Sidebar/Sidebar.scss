@@ -33,7 +33,11 @@
         > span {
           font-size: 1.5rem;
           display: inline-block;
-          transform: translateY(-4px);
+          transform: translateY(-3px);
+        }
+
+        > svg {
+          transform: translateY(0.2rem);
         }
 
         &:hover {

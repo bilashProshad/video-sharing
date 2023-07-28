@@ -16,6 +16,7 @@ import UpdateVideo from "./pages/UpdateVideo/UpdateVideo";
 import Channel from "./pages/Channel/Channel";
 import LikedVideos from "./pages/LikedVideos/LikedVideos";
 import SavedVideos from "./pages/SavedVideos/SavedVideos";
+import Search from "./pages/Search/Search";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/discover" element={<Discover />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/:id" element={<SingleVideo />} />
         <Route path="/channel/:id/videos" element={<Channel />} />
 
